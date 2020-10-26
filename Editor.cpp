@@ -24,7 +24,7 @@ Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string fileName)
+Editor::Editor(string fileName) throw(invalid_argument)
 {
 	ifstream inFile(fileName);
 	string temp;

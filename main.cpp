@@ -16,7 +16,4 @@ int main()
 	Editor miniVi(fileName);
 	miniVi.displayLines();
 
-	shared_ptr<LinkedList<string>> smartPtr(new LinkedList<string>());
-	auto spList = make_shared<LinkedList<string>>();
-
-} 
+}

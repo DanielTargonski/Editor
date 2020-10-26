@@ -24,5 +24,4 @@ public:
 	// displays everything in lines
 	void displayLines();
 
-
 };
