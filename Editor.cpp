@@ -11,12 +11,13 @@ void placeCursorAt(Point coordinate) {
 		coord);
 }
 
-
 void Editor::displayLines()
 {
 	int position;
 	for (position = 1; position <= lines.getLength(); position++)
 		cout << lines.getEntry(position) << "\n";
+
+	placeCursorAt(cursorPosition);
 
 } // end displayLines()
 

@@ -15,5 +15,4 @@ int main()
 	string fileName("sample.txt");
 	Editor miniVi(fileName);
 	miniVi.displayLines();
-
 }
