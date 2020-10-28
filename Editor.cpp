@@ -65,7 +65,7 @@ void Editor::moveDown()
 	if (uPos.getY() < lines.getLength()-1 && uPos.getX() <= lines.getEntry(uPos.getY() + 1).length())
 	{
 		// set x to last char in line under current line
-		if (uPos.getX() > lines.getEntry(uPos.getY()+2).length())
+		if (uPos.getX() >= lines.getEntry(uPos.getY()+2).length())
 			uPos.setX(lines.getEntry(uPos.getY()+2).length() - 1);
 
 		uPos.setY(uPos.getY() + 1);
@@ -78,7 +78,7 @@ void Editor::moveUp()
 	if (uPos.getY() > 0)
 	{
 		// set x to last char in the string above
-		if (uPos.getX() > lines.getEntry(uPos.getY()).length())
+		if (uPos.getX() >= lines.getEntry(uPos.getY()).length())
 			uPos.setX(lines.getEntry(uPos.getY()).length() - 1);
 
 		uPos.setY(uPos.getY() - 1);
