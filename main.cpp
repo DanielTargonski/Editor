@@ -10,9 +10,10 @@
 
 using namespace std;
 
-int main()
+void main(int argc, const char * argv[])
 {
 	string fileName("sample.txt");
 	Editor miniVi(fileName);
 	miniVi.displayLines();
+	miniVi.run();
 }

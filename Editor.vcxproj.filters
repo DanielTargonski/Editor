@@ -27,6 +27,9 @@
     <ClCompile Include="PrecondViolatedExcep.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="CommandPlus.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedList.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrecondViolatedExcep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandPlus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
