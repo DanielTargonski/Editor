@@ -71,7 +71,7 @@ void Editor::moveDown()
 
 void Editor::moveUp()
 {
-	if (uPos.getY() > 0)
+	if (uPos.getY() > 0 && uPos.getX() <= lines.getEntry(uPos.getY()-1).length() )
 	{
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
@@ -94,7 +94,6 @@ void Editor::moveRight()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 	}
-
 }
 
 void Editor::run()
