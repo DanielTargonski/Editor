@@ -12,8 +12,7 @@ using namespace std;
 
 void main(int argc, const char * argv[])
 {
-	string fileName("sample.txt");
-	Editor miniVi(fileName);
+	Editor miniVi(argv[1]);
 	miniVi.displayLines();
 	miniVi.run();
 }
