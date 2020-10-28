@@ -116,7 +116,7 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // up arrow key
+		case 80: // up arrow key 
 			moveDown();
 			//placeCursorAt(uPos);
 			break;
