@@ -110,27 +110,30 @@ void Editor::run()
 	const int ESCAPE = 27;
 	CommandPlus cmd;
 
-	while (cmd.getCommand() != QUIT)
+	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
 		{
 		case 'j':
 			moveDown();
-			//placeCursorAt(uPos);
 			break;
 		case 'k':
 			moveUp();
-			//placeCursorAt(uPos);
 			break;
 		case 'l':
 			moveRight();
-			//placeCursorAt(uPos);
 			break;
 		case 'h':
 			moveLeft();
-			//placeCursorAt(uPos);
 			break;
+		case QUIT:
+			exit(1);
+			break;
+		case ESCAPE:
+			exit(1);
+			break;
+
 		default:
 			break;
 		} 
