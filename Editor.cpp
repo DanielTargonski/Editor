@@ -110,7 +110,7 @@ void Editor::run()
 	const int ESCAPE = 27;
 	CommandPlus cmd;
 
-	while (cmd.getCommand() != QUIT)
+	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
@@ -118,23 +118,26 @@ void Editor::run()
 		case 'j':
 		case 80: // up arrow key
 			moveDown();
-			//placeCursorAt(uPos);
 			break;
 		case 'k':
 		case 72: // down arrow key
 			moveUp();
-			//placeCursorAt(uPos);
 			break;
 		case 'l':
 		case 77: // right arrow key
 			moveRight();
-			//placeCursorAt(uPos);
 			break;
 		case 'h':
 		case 75: // left arrow key
 			moveLeft();
-			//placeCursorAt(uPos);
 			break;
+		case QUIT:
+			exit(1);
+			break;
+		case ESCAPE:
+			exit(1);
+			break;
+
 		default:
 			break;
 		} 
