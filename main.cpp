@@ -12,6 +12,7 @@ using namespace std;
 
 void main(int argc, const char * argv[])
 {
+	// argv[] reads in from the command line.
 	Editor miniVi(argv[1]);
 	miniVi.displayLines();
 	miniVi.run();

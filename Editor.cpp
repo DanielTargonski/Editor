@@ -70,8 +70,8 @@ void Editor::moveDown()
 
 		uPos.setY(uPos.getY() + 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveDown
 
 void Editor::moveUp()
 {
@@ -83,8 +83,8 @@ void Editor::moveUp()
 
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveUp
 
 void Editor::moveLeft()
 {
@@ -92,8 +92,8 @@ void Editor::moveLeft()
 	{
 		uPos.setX(uPos.getX() - 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveLeft
 
 void Editor::moveRight()
 {
@@ -101,8 +101,8 @@ void Editor::moveRight()
 	{
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveRight
 
 void Editor::run()
 {
@@ -141,5 +141,5 @@ void Editor::run()
 		default:
 			break;
 		} 
-	}
-}
+	} // end while
+} // end run
