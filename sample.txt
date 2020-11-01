@@ -1,5 +1,9 @@
-test
-s p a c e
-{ } ( )
-3 5 6 8
-.  .. .. {{}}
+add run to the Editor class
+
+this method reads the command and then does the command - moveDown, moveUp,...
+
+the user can quit by typing 'q'
+
+once that is working,
+
+use the new main arguments to pass the filename from the IDE

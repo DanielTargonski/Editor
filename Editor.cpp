@@ -62,11 +62,13 @@ void Editor::moveDown()
 	// subtract 1 from getLength because the Y position is always 1 less than the list
 	// line number. Also checks to see if the current 'x' position is less than or equal to
 	// the length of the string below it.
-	if (uPos.getY() < lines.getLength() - 1 && uPos.getX() <= lines.getEntry(uPos.getY() + 1).length())
+	if (uPos.getY() < lines.getLength() - 1)
 	{
 		// set x to last char in line under current line
 		if (uPos.getX() >= lines.getEntry(uPos.getY() + 2).length())
 			uPos.setX(lines.getEntry(uPos.getY() + 2).length() - 1);
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		uPos.setY(uPos.getY() + 1);
 		placeCursorAt(uPos);
@@ -80,6 +82,8 @@ void Editor::moveUp()
 		// Sets 'x' coordinate to last char in the string above current line
 		if (uPos.getX() >= lines.getEntry(uPos.getY()).length())
 			uPos.setX(lines.getEntry(uPos.getY()).length() - 1);
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
