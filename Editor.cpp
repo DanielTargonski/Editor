@@ -125,6 +125,7 @@ void Editor::run()
 {
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
+	unsigned int count{};
 	CommandPlus cmd;
 
 	// Keeps program running while users does not enter 'q' or ESC
@@ -153,6 +154,11 @@ void Editor::run()
 		case 'x':
 			break;
 		case 'd':
+			count++;
+			if (count == 2) {
+				deleteLine();
+				count = 0;
+			}
 			break;
 		case QUIT:
 			exit(1);
