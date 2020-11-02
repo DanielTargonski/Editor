@@ -12,6 +12,7 @@ You can move the cursor up, down, left, and right.
 #include<fstream>
 #include<Windows.h>
 #include"CommandPlus.h"
+#include"LinkedStack.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ class Editor {
 private:
 	// Each node in lines stores a string.
 	LinkedList<string> lines;
+	// Stack that saves deleted text.
+	LinkedStack<string> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
 
@@ -60,6 +63,19 @@ public:
 	@post  The cursor moves one position to the right.
 	*/
 	void moveRight();
+
+	/**
+	@pre  User cursor must be on a char or empty space
+	@post  The char in the string is deleted and pushed
+	onto the LinkedStack.
+	*/
+	void deleteChar();
+
+	/**
+	@pre  Cursor is on a line.
+	@post  Line is deleted and pushed into the undo stack.
+	*/
+	void deleteLine();
 
 	/**
 	@pre  None.

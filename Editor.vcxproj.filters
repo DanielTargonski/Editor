@@ -53,6 +53,12 @@
     <ClInclude Include="CommandPlus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StackInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedStack.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="sample.txt">

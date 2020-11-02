@@ -110,6 +110,17 @@ void Editor::moveRight()
 	} // end if
 } // end moveRight()
 
+void Editor::deleteChar()
+{
+
+}
+
+void Editor::deleteLine()
+{
+	undoSt.push(lines.getEntry(uPos.getY() + 1));
+	lines.remove(uPos.getY() + 1);
+}
+
 void Editor::run()
 {
 	const char QUIT = 'q';
@@ -138,6 +149,10 @@ void Editor::run()
 		case 'h':
 		case 75: // left arrow key
 			moveLeft();
+			break;
+		case 'x':
+			break;
+		case 'd':
 			break;
 		case QUIT:
 			exit(1);

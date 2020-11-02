@@ -13,7 +13,14 @@ using namespace std;
 void main(int argc, const char * argv[])
 {
 	// argv[] reads in from the command line.
+	if (argc < 1)
+	{
+		cerr << "argc is less than 1.\n";
+			exit(1);
+	}
+
 	Editor miniVi(argv[1]);
+	system("CLS"); // clears screen
 	miniVi.displayLines();
 	miniVi.run();
 }
