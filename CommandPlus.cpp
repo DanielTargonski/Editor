@@ -1,3 +1,7 @@
+/**
+* Implementation file for the CommandPlus class.
+@file CommandPlus.cpp
+*/
 #include"CommandPlus.h"
 
 using namespace std;

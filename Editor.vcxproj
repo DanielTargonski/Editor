@@ -149,10 +149,12 @@
     <ClInclude Include="CommandPlus.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="LinkedStack.h" />
     <ClInclude Include="ListInterface.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="PrecondViolatedExcep.h" />
+    <ClInclude Include="StackInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="sample.txt" />

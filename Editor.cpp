@@ -1,4 +1,6 @@
-//@file Editor.cpp
+/** Implementation file for the "Editor" class.
+@file Editor.cpp
+*/
 
 #include"Editor.h"
 
@@ -9,7 +11,7 @@ void placeCursorAt(Point coordinate) {
 	SetConsoleCursorPosition(
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coord);
-}
+} // end placeCursorAt
 
 void Editor::displayLines()
 {
@@ -18,7 +20,6 @@ void Editor::displayLines()
 		cout << lines.getEntry(position) << "\n";
 
 	placeCursorAt(uPos);
-
 } // end displayLines()
 
 Editor::Editor()
@@ -35,9 +36,7 @@ Editor::Editor(string fileName)
 	try
 	{
 		if (inFile.fail())
-		{
 			throw invalid_argument("File failed to opened.");
-		} // end if
 	} // end try
 	catch (const invalid_argument& invArg)
 	{
@@ -57,34 +56,39 @@ Editor::Editor(string fileName)
 	} // end while
 } // end Editor(string fileName)
 
-// Moves the cursorPositiion down by 1
-// @pre 
-// @post
 void Editor::moveDown()
 {
-	if (uPos.getY() < lines.getLength()-1 && uPos.getX() <= lines.getEntry(uPos.getY() + 1).length())
+	// Checks if the current Y position is less than the number of lines
+	// in the list subtract 1 from getLength because the Y position is always
+	// 1 less than the list line number. Also checks to see if the current
+	// 'x' position is less than or equal to the length of the string below it.
+	if (uPos.getY() < lines.getLength() - 1)
 	{
 		// set x to last char in line under current line
-		if (uPos.getX() > lines.getEntry(uPos.getY()+2).length())
-			uPos.setX(lines.getEntry(uPos.getY()+2).length() - 1);
+		if (uPos.getX() >= lines.getEntry(uPos.getY() + 2).length())
+			uPos.setX(lines.getEntry(uPos.getY() + 2).length() - 1);
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		uPos.setY(uPos.getY() + 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveDown()
 
 void Editor::moveUp()
 {
 	if (uPos.getY() > 0)
 	{
-		// set x to last char in the string above
-		if (uPos.getX() > lines.getEntry(uPos.getY()).length())
+		// Sets 'x' coordinate to last char in the string above current line
+		if (uPos.getX() >= lines.getEntry(uPos.getY()).length())
 			uPos.setX(lines.getEntry(uPos.getY()).length() - 1);
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveUp()
 
 void Editor::moveLeft()
 {
@@ -92,16 +96,29 @@ void Editor::moveLeft()
 	{
 		uPos.setX(uPos.getX() - 1);
 		placeCursorAt(uPos);
-	}
-}
+	} // end if
+} // end moveLeft()
 
 void Editor::moveRight()
-{
-	if (uPos.getX() < lines.getEntry(uPos.getY()+1).length()-1)
+{	// Checks if current 'x' position is less than the length of the current
+	// line so as not to go past last character in the string.
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
+		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
-	}
+	} // end if
+} // end moveRight()
+
+void Editor::deleteChar()
+{
+
+}
+
+void Editor::deleteLine()
+{
+	undoSt.push(lines.getEntry(uPos.getY() + 1));
+	lines.remove(uPos.getY() + 1);
 }
 
 void Editor::run()
@@ -110,7 +127,9 @@ void Editor::run()
 	const int ESCAPE = 27;
 	CommandPlus cmd;
 
-	while (cmd.getCommand() != QUIT)
+	// Keeps program running while users does not enter 'q' or ESC
+	// Allows user to enter certain commands to move cursor around txt file
+	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
@@ -118,25 +137,31 @@ void Editor::run()
 		case 'j':
 		case 80: // up arrow key 
 			moveDown();
-			//placeCursorAt(uPos);
 			break;
 		case 'k':
 		case 72: // down arrow key
 			moveUp();
-			//placeCursorAt(uPos);
 			break;
 		case 'l':
 		case 77: // right arrow key
 			moveRight();
-			//placeCursorAt(uPos);
 			break;
 		case 'h':
 		case 75: // left arrow key
 			moveLeft();
-			//placeCursorAt(uPos);
+			break;
+		case 'x':
+			break;
+		case 'd':
+			break;
+		case QUIT:
+			exit(1);
+			break;
+		case ESCAPE:
+			exit(1);
 			break;
 		default:
 			break;
-		} 
-	}
-}
+		}
+	} // end while
+} // end run()
