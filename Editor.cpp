@@ -113,14 +113,20 @@ void Editor::moveRight()
 void Editor::deleteChar()
 {
 	//undoSt.push(lines.getEntry(uPos.getY()+1).operator[uPos.getX()]);
-	//replace and displaylines again
-	lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), uPos.getX());
+	//replace the string and displaylines again
+	lines.getEntry(uPos.getY() + 1).erase(uPos.getX(),1);
+
+	system("CLS"); // clears screen
+	displayLines();
 }
 
 void Editor::deleteLine()
 {
 	undoSt.push(lines.getEntry(uPos.getY() + 1));
 	lines.remove(uPos.getY() + 1);
+
+	system("CLS"); // clears screen
+	displayLines();
 }
 
 void Editor::run()
