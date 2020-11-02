@@ -112,7 +112,9 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
-
+	//undoSt.push(lines.getEntry(uPos.getY()+1).operator[uPos.getX()]);
+	//replace and displaylines again
+	lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), uPos.getX());
 }
 
 void Editor::deleteLine()
@@ -151,6 +153,7 @@ void Editor::run()
 			moveLeft();
 			break;
 		case 'x':
+			deleteChar();
 			break;
 		case 'd':
 			break;
