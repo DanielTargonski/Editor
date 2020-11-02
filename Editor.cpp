@@ -112,9 +112,11 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
-	// undoSt.push(lines.getEntry(uPos.getY()+1).operator[uPos.getX()]);
+	undoSt.push(lines.getEntry(uPos.getY()+1).substr(uPos.getX(), 1));
 	// replace the string and displaylines again
 	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
+	
+	if (uPos.getX() > 0)
 	uPos.setX(uPos.getX() - 1);
 
 	system("CLS"); // clears screen
