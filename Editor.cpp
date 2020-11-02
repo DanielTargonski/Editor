@@ -114,7 +114,7 @@ void Editor::deleteChar()
 {
 	//undoSt.push(lines.getEntry(uPos.getY()+1).operator[uPos.getX()]);
 	//replace the string and displaylines again
-	lines.getEntry(uPos.getY() + 1).erase(uPos.getX(),1);
+	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 
 	system("CLS"); // clears screen
 	displayLines();
