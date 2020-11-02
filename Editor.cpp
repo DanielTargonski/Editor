@@ -58,7 +58,7 @@ Editor::Editor(string fileName)
 
 void Editor::moveDown()
 {
-	// Checks if the current Y position is less than the number of lines 
+	// Checks if the current Y position is less than the number of lines
 	// in the list subtract 1 from getLength because the Y position is always
 	// 1 less than the list line number. Also checks to see if the current
 	// 'x' position is less than or equal to the length of the string below it.
@@ -102,7 +102,7 @@ void Editor::moveLeft()
 void Editor::moveRight()
 {	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1 
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -145,7 +145,6 @@ void Editor::run()
 		case ESCAPE:
 			exit(1);
 			break;
-
 		default:
 			break;
 		}

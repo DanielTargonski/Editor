@@ -5,7 +5,6 @@ You can move the cursor up, down, left, and right.
 @file Editor.h
 */
 
-
 #pragma once
 #include"LinkedList.h"
 #include"point.h"
@@ -24,10 +23,11 @@ private:
 	Point uPos;
 
 public:
+	// Does nothing for now.
 	Editor();
 
 	/** Opens a file from the passed string and creates the list
-	@param filename string, takes in a 
+	@param filename string, takes in a
 	@Pre  The passed string must be the name of a file and in the directory
 	@Post  A list is created from the file that was passed as a string parameter */
 	Editor(string fileName);
@@ -67,7 +67,4 @@ public:
 	to move a cursor around the text.
 	*/
 	void run();
-
-
-
 };
