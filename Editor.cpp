@@ -128,7 +128,10 @@ void Editor::deleteChar()
 
 void Editor::deleteLine()
 {
-	//undoSt.push(lines.getEntry(uPos.getY() + 1));
+	cmd.setValue(lines.getEntry(uPos.getY() + 1));
+	cmd.setLocation(uPos);
+	undoSt.push(cmd);
+
 	lines.remove(uPos.getY() + 1);
 
 	system("CLS"); // clears screen
