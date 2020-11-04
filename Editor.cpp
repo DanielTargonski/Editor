@@ -148,7 +148,9 @@ void Editor::InsertMode()
 	if (uPos.getX() > 0)
 		uPos.setX(uPos.getX() + 1);
 	placeCursorAt(uPos);
-	std::cout << "You are on insert mode";
+	std::string userInput{};
+	std::getline(std::cin, userInput);
+	//lines.insert();
 }
 
 void Editor::run()
