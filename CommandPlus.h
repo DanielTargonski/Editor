@@ -11,7 +11,7 @@ using namespace std;
 class CommandPlus {
 private:
 	char command{};
-	vector<Point> location;
+	Point location;
 	string value;
 
 public:

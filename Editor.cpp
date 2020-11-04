@@ -138,6 +138,19 @@ void Editor::deleteLine()
 	displayLines();
 } // end deleteLine()
 
+void Editor::undo()
+{
+
+}
+
+void Editor::InsertMode()
+{
+	if (uPos.getX() > 0)
+		uPos.setX(uPos.getX() + 1);
+	placeCursorAt(uPos);
+	std::cout << "You are on insert mode";
+}
+
 void Editor::run()
 {
 	const char QUIT = 'q';
@@ -181,6 +194,9 @@ void Editor::run()
 				deleteLine();
 				count = 0;
 			}
+			break;
+		case 'i':
+			InsertMode();
 			break;
 		case QUIT:
 			exit(1);

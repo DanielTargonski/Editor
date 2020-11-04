@@ -27,5 +27,5 @@ void CommandPlus::setValue(const string& _value)
 
 void CommandPlus::setLocation(const Point& _location)
 {
-	location.push_back(_location);
+	location = _location;
 }
