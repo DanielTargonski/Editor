@@ -19,3 +19,13 @@ void CommandPlus::setCommand()
 {
 	command = _getwch();
 }
+
+void CommandPlus::setValue(const string& _value)
+{
+	value = _value;
+}
+
+void CommandPlus::setLocation(const Point& _location)
+{
+	location.push_back(_location);
+}

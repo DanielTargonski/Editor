@@ -112,9 +112,10 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
-	CommandPlus cmd;
+	cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+	cmd.setLocation(uPos);
+	undoSt.push(cmd);
 
-	undoSt.push(lines.getEntry(uPos.getY()+1).substr(uPos.getX(), 1));
 	// replace the string and displaylines again
 	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 	
@@ -127,7 +128,7 @@ void Editor::deleteChar()
 
 void Editor::deleteLine()
 {
-	undoSt.push(lines.getEntry(uPos.getY() + 1));
+	//undoSt.push(lines.getEntry(uPos.getY() + 1));
 	lines.remove(uPos.getY() + 1);
 
 	system("CLS"); // clears screen
@@ -139,7 +140,6 @@ void Editor::run()
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
 	unsigned int count{};
-	CommandPlus cmd;
 
 	// Keeps program running while users does not enter 'q' or ESC
 	// Allows user to enter certain commands to move cursor around txt file
