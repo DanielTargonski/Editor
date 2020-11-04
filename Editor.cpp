@@ -115,6 +115,7 @@ void Editor::deleteChar()
 	cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
+
 	// replace the string and displaylines again
 	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 	
@@ -123,16 +124,19 @@ void Editor::deleteChar()
 
 	system("CLS"); // clears screen
 	displayLines();
-}
+} // end deleteChar()
 
 void Editor::deleteLine()
 {
-	undoSt.push(lines.getEntry(uPos.getY() + 1));
+	cmd.setValue(lines.getEntry(uPos.getY() + 1));
+	cmd.setLocation(uPos);
+	undoSt.push(cmd);
+
 	lines.remove(uPos.getY() + 1);
 
 	system("CLS"); // clears screen
 	displayLines();
-}
+} // end deleteLine()
 
 void Editor::run()
 {

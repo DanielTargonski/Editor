@@ -4,14 +4,16 @@
 */
 #pragma once
 #include<conio.h>
-#include <vector>
-#include "point.h"
+#include<vector>
+#include"point.h"
 
+using namespace std;
 class CommandPlus {
 private:
 	char command{};
-	std::vector<Point> locations;
-	std::string value;
+	vector<Point> location;
+	string value;
+
 public:
 	// Default constructor.
 	// Does nothing as of now.
@@ -29,6 +31,7 @@ public:
 	*/
 	void setCommand();
 
-	void setLocation(const Point& _locations);
-	void setValue(const std::string& _value);
+	void setValue(const string& _value);
+
+	void setLocation(const Point& _location);
 };
