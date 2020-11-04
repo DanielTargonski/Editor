@@ -8,6 +8,7 @@
 class CommandPlus {
 private:
 	char command{};
+	Point location[100];
 
 public:
 	// Default constructor.

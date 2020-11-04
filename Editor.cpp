@@ -112,6 +112,8 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
+	CommandPlus cmd;
+
 	undoSt.push(lines.getEntry(uPos.getY()+1).substr(uPos.getX(), 1));
 	// replace the string and displaylines again
 	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
@@ -121,7 +123,7 @@ void Editor::deleteChar()
 
 	system("CLS"); // clears screen
 	displayLines();
-}
+} // end deleteChar()
 
 void Editor::deleteLine()
 {
@@ -130,7 +132,7 @@ void Editor::deleteLine()
 
 	system("CLS"); // clears screen
 	displayLines();
-}
+} // end deleteLine()
 
 void Editor::run()
 {
