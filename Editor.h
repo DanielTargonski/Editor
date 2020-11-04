@@ -84,6 +84,4 @@ public:
 	to move a cursor around the text.
 	*/
 	void run();
-
-	void InsertMode();
 };
