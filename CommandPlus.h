@@ -6,12 +6,13 @@
 #include<conio.h>
 #include<vector>
 #include"point.h"
+#include"Editor.h"
 
 using namespace std;
 class CommandPlus {
 private:
 	char command{};
-	vector<Point> location;
+	Point location;
 	string value;
 
 public:
@@ -33,5 +34,11 @@ public:
 
 	void setValue(const string& _value);
 
+	string getValue();
+
 	void setLocation(const Point& _location);
+
+	int getYLocation();
+
+	int getXLocation();
 };

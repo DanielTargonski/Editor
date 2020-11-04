@@ -25,7 +25,23 @@ void CommandPlus::setValue(const string& _value)
 	value = _value;
 }
 
+string CommandPlus::getValue()
+{
+	return value;
+}
+
 void CommandPlus::setLocation(const Point& _location)
 {
-	location.push_back(_location);
+	location = _location;
 }
+
+int CommandPlus::getYLocation()
+{
+	return location.getY();
+}
+
+int CommandPlus::getXLocation()
+{
+	return location.getX();
+}
+

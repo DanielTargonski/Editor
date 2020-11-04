@@ -117,10 +117,10 @@ void Editor::deleteChar()
 	undoSt.push(cmd);
 
 	// replace the string and displaylines again
-	lines.replace(uPos.getY()+1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
-	
+	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
+
 	if (uPos.getX() > 0)
-	uPos.setX(uPos.getX() - 1);
+		uPos.setX(uPos.getX() - 1);
 
 	system("CLS"); // clears screen
 	displayLines();
@@ -138,6 +138,17 @@ void Editor::deleteLine()
 	displayLines();
 } // end deleteLine()
 
+void Editor::undo()
+{
+	CommandPlus tempCmd = undoSt.peek();
+	undoSt.pop();
+
+	lines.replace(tempCmd.getYLocation() + 1, tempCmd.getValue());
+
+	system("CLS"); // clears screen
+	displayLines();
+}
+
 void Editor::run()
 {
 	const char QUIT = 'q';
@@ -152,7 +163,7 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // up arrow key 
+		case 80: // up arrow key
 			moveDown();
 			count = 0;
 			break;
@@ -181,6 +192,9 @@ void Editor::run()
 				deleteLine();
 				count = 0;
 			}
+			break;
+		case 'u':
+			undo();
 			break;
 		case QUIT:
 			exit(1);

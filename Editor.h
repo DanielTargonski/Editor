@@ -85,4 +85,10 @@ public:
 	to move a cursor around the text.
 	*/
 	void run();
+
+	/**
+	@pre  Something must've been deleted.
+	@post  Inserts deleted char/string back into lines.
+	*/
+	void undo();
 };
