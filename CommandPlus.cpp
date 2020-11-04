@@ -19,3 +19,13 @@ void CommandPlus::setCommand()
 {
 	command = _getwch();
 }
+
+void CommandPlus::setValue(const std::string& _value)
+{
+	value = _value;
+}
+
+void CommandPlus::setLocation(const Point& _locations)
+{
+	locations.push_back(_locations);
+}
