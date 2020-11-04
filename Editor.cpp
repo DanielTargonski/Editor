@@ -151,21 +151,26 @@ void Editor::run()
 		case 'j':
 		case 80: // up arrow key 
 			moveDown();
+			count = 0;
 			break;
 		case 'k':
 		case 72: // down arrow key
 			moveUp();
+			count = 0;
 			break;
 		case 'l':
 		case 77: // right arrow key
 			moveRight();
+			count = 0;
 			break;
 		case 'h':
 		case 75: // left arrow key
 			moveLeft();
+			count = 0;
 			break;
 		case 'x':
 			deleteChar();
+			count = 0;
 			break;
 		case 'd':
 			count++;
@@ -181,6 +186,7 @@ void Editor::run()
 			exit(1);
 			break;
 		default:
+			count = 0;
 			break;
 		}
 	} // end while
