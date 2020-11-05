@@ -21,11 +21,11 @@ private:
 	// Each node in lines stores a string.
 	LinkedList<string> lines;
 	// Stack that saves deleted text.
-	LinkedStack<CommandPlus> undoSt;
+	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
 
-	CommandPlus cmd;
+	//CommandPlus cmd;
 
 public:
 	// Does nothing for now.

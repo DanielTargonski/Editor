@@ -112,9 +112,13 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
-	cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
-	cmd.setLocation(uPos);
-	undoSt.push(cmd);
+	if (lines.getEntry(uPos.getY() + 1).length() > 0)
+	{
+		CommandPlus cmd;
+		cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+		cmd.setLocation(uPos);
+		undoSt.push(cmd);
+	}
 
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
@@ -128,6 +132,7 @@ void Editor::deleteChar()
 
 void Editor::deleteLine()
 {
+	CommandPlus cmd;
 	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
@@ -140,13 +145,28 @@ void Editor::deleteLine()
 
 void Editor::undo()
 {
-	CommandPlus tempCmd = undoSt.peek();
-	undoSt.pop();
+	CommandPlus tempCmd;
+	if (!undoSt.isEmpty())
+	{
+		tempCmd = undoSt.peek();
+		undoSt.pop();
+		// If we are undoing a string deletion then we insert it back
+		// to where it was deleted and display the lines again.
+		if (tempCmd.getDelText().length() > 1)
+			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
+		// Else, we are restoring a character, which requires the string
+		// to be replaced with the character in the exact place it originally was.
+		else
+		{
+			lines.replace(tempCmd.getYLocation() + 1,
+				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
+			uPos.setX(uPos.getX() + 1);
+		}
 
-	lines.replace(tempCmd.getYLocation() + 1, tempCmd.getDelText());
 
-	system("CLS"); // clears screen
-	displayLines();
+		system("CLS"); // clears screen
+		displayLines();
+	}
 }
 
 void Editor::run()
@@ -154,6 +174,7 @@ void Editor::run()
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
 	unsigned int count{};
+	CommandPlus cmd;
 
 	// Keeps program running while users does not enter 'q' or ESC
 	// Allows user to enter certain commands to move cursor around txt file
