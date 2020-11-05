@@ -138,11 +138,6 @@ void Editor::deleteLine()
 	displayLines();
 } // end deleteLine()
 
-void Editor::undo()
-{
-
-}
-
 void Editor::InsertMode()
 {
 	if (uPos.getX() > 0)

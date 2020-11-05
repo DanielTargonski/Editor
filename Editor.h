@@ -85,6 +85,5 @@ public:
 	*/
 	void run();
 
-	void undo();
 	void InsertMode();
 };
