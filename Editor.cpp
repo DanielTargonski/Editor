@@ -169,6 +169,33 @@ void Editor::undo()
 	}
 }
 
+void Editor::InsertMode()
+{
+	bool insertMode{ true };
+	while (insertMode)
+	{
+		// Set and move cursor 1+
+		uPos.setX(uPos.getX() + 1);
+		placeCursorAt(uPos);
+
+		// Get user input
+		string userInput{};
+		getline(cin, userInput);
+
+		// Append to the last position in position y
+		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).append(userInput));
+
+		// Fix and move to new position
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		placeCursorAt(uPos);
+
+		if (_getwch() == 27)
+		{
+			insertMode = false;
+		}
+	}
+}
+
 void Editor::run()
 {
 	const char QUIT = 'q';
@@ -216,6 +243,9 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
+			break;
+		case 'i':
+			InsertMode();
 			break;
 		case QUIT:
 			exit(1);
