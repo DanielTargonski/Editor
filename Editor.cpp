@@ -112,7 +112,7 @@ void Editor::moveRight()
 
 void Editor::deleteChar()
 {
-	cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+	cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
@@ -128,7 +128,7 @@ void Editor::deleteChar()
 
 void Editor::deleteLine()
 {
-	cmd.setValue(lines.getEntry(uPos.getY() + 1));
+	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
@@ -143,7 +143,7 @@ void Editor::undo()
 	CommandPlus tempCmd = undoSt.peek();
 	undoSt.pop();
 
-	lines.replace(tempCmd.getYLocation() + 1, tempCmd.getValue());
+	lines.replace(tempCmd.getYLocation() + 1, tempCmd.getDelText());
 
 	system("CLS"); // clears screen
 	displayLines();

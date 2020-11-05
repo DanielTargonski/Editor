@@ -44,20 +44,17 @@ public:
 
 	/** Moves cursor down.
 	@pre  There must be text below current location of cursor.
-	@post  The cursor moves down one position.
-	*/
+	@post  The cursor moves down one position.*/
 	void moveDown();
 
 	/** Moves the cursor up.
 	@pre  There must be text above current location of cursor.
-	@post  The cursor moves up one position.
-	*/
+	@post  The cursor moves up one position.*/
 	void moveUp();
 
 	/** Moves the cursor to the left.
 	@pre  There must be text to the left of current location of cursor.
-	@post  The cursor moves one position to the left.
-	*/
+	@post  The cursor moves one position to the left.*/
 	void moveLeft();
 
 	/**
