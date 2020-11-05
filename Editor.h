@@ -21,10 +21,11 @@ private:
 	// Each node in lines stores a string.
 	LinkedList<string> lines;
 	// Stack that saves deleted text.
-	LinkedStack<CommandPlus> undoSt;
-	CommandPlus cmd;
+	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
+
+	//CommandPlus cmd;
 
 public:
 	// Does nothing for now.
@@ -43,20 +44,17 @@ public:
 
 	/** Moves cursor down.
 	@pre  There must be text below current location of cursor.
-	@post  The cursor moves down one position.
-	*/
+	@post  The cursor moves down one position.*/
 	void moveDown();
 
 	/** Moves the cursor up.
 	@pre  There must be text above current location of cursor.
-	@post  The cursor moves up one position.
-	*/
+	@post  The cursor moves up one position.*/
 	void moveUp();
 
 	/** Moves the cursor to the left.
 	@pre  There must be text to the left of current location of cursor.
-	@post  The cursor moves one position to the left.
-	*/
+	@post  The cursor moves one position to the left.*/
 	void moveLeft();
 
 	/**
@@ -85,5 +83,9 @@ public:
 	*/
 	void run();
 
-	void InsertMode();
+	/**
+	@pre  Something must've been deleted.
+	@post  Inserts deleted char/string back into lines.
+	*/
+	void undo();
 };
