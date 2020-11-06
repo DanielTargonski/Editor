@@ -22,7 +22,7 @@ public:
 
 	/** Returns the command char.
 	@pre  None.
-	@post  Returns private member char "command". 
+	@post  Returns private member char "command".
 	@return  returns the character of the private member "command" */
 	char getCommand();
 

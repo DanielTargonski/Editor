@@ -130,12 +130,6 @@ void Editor::deleteChar()
 	displayLines();
 } // end deleteChar()
 
-
-/**BUGS
-- Problems when you delete all the lines
-- When hovering the cursor over the last char in the last line of a line under an empty line
-and then deleting it, the cursor jumps beneath all of the lines
-*/
 void Editor::deleteLine()
 {
 	bool removed = false;
@@ -169,7 +163,7 @@ void Editor::deleteLine()
 		uPos.setX(0);
 
 	system("CLS"); // clears screen
-	displayLines(); 
+	displayLines();
 } // end deleteLine()
 
 void Editor::undo()
@@ -190,8 +184,8 @@ void Editor::undo()
 			lines.replace(tempCmd.getYLocation() + 1,
 				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
 
-			if(uPos.getX() < lines.getEntry(uPos.getY()+1).length()-1)
-			uPos.setX(uPos.getX() + 1);
+			if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1)
+				uPos.setX(uPos.getX() + 1);
 		}
 		system("CLS"); // clears screen
 		displayLines();
