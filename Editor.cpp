@@ -138,6 +138,8 @@ void Editor::deleteLine()
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
+	// This prevents the last node from being deleted;
+	// instead replacing it with an empty string.
 	if (lines.getLength() == 1)
 	{
 		lines.replace(1, "");
@@ -178,16 +180,28 @@ void Editor::undo()
 		// to where it was deleted and display the lines again.
 		if (tempCmd.getDelText().length() > 1 || tempCmd.getDelText() == "")
 			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
+
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
 				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
-
+			// This increments the x position as you are undoing as long as
+			// the length of the line is longer than the x position.
+			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
+			// else statement.
 			if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1)
 				uPos.setX(uPos.getX() + 1);
 		}
+
+		// This stops the x cursor from going out of bounds
+		if (uPos.getX() > lines.getEntry(uPos.getY() + 1).length())
+			uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		//This stops the x-coord from going negative.
+		if (uPos.getX() < 0)
+			uPos.setX(0);
+
 		system("CLS"); // clears screen
 		displayLines();
 	}
@@ -240,6 +254,7 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
+			count = 0;
 			break;
 		default:
 			count = 0;
