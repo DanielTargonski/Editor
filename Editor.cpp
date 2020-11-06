@@ -155,8 +155,9 @@ void Editor::deleteLine()
 	if (!removed)
 		lines.remove(uPos.getY() + 1);
 
-	// If the x position is greater than the length of the line
-	// then put the cursor position to the last char of the line
+	// If the x position is greater than the length of the new line
+	// then put the cursor position to the last char of the line.
+	// If the line is empty (a "" string) then set 'x' coord to 0.
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
 	else
