@@ -38,11 +38,32 @@ public:
 	"deletedText" member. */
 	void setDelText(const string& _delText);
 
+	/** Getter method for private member "deletedText".
+	@pre  There must be something stored in the deletedText string.
+	@post  None.
+	@return  Returns the string stored in the private member "deletedText".
+	*/
 	string getDelText();
 
+	/** Saves the (x,y) pair into the private "location" Point object.
+	@pre  None.
+	@post  The (x,y) position of the user is saved into private Point
+	object member "location".
+	@param  _location  Takes in the current users (x,y) coordinates.
+	*/
 	void setLocation(const Point& _location);
 
+	/** Getter method to return the Y coord in private member "location".
+	@pre  None.
+	@post None.
+	@return  Returns the 'y' coordinate stored in private member "location".
+	*/
 	int getYLocation();
 
+	/** Getter method to retrieve the X coordinate in private member "location".
+	@pre  None.
+	@post  None.
+	@return  Returns the 'x' coordinate stored in private member "location".
+	*/
 	int getXLocation();
 };
