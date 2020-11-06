@@ -209,6 +209,7 @@ void Editor::undo()
 
 void Editor::run()
 {
+	int lengthOfLines{};
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
 	unsigned int count{};
@@ -261,4 +262,9 @@ void Editor::run()
 			break;
 		} // end switch
 	} // end while
+	// Creates space so that the text doesn't get obstructed by the
+	// closing of terminal message.
+	lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
 } // end run()
