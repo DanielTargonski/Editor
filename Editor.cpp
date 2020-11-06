@@ -130,17 +130,46 @@ void Editor::deleteChar()
 	displayLines();
 } // end deleteChar()
 
+
+/**BUGS
+- Problems when you delete all the lines
+- When hovering the cursor over the last char in the last line of a line under an empty line
+and then deleting it, the cursor jumps beneath all of the lines
+*/
 void Editor::deleteLine()
 {
+	bool removed = false;
 	CommandPlus cmd;
 	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
-	lines.remove(uPos.getY() + 1);
+	if (lines.getLength() == 1)
+	{
+		lines.replace(1, "");
+		removed = true;
+	}
+
+	// When deleting a line, the Y-coord should be decremented so to prevent
+	// the cursor from being on an empty line.
+	if (uPos.getY() > 0 && !removed)
+	{
+		lines.remove(uPos.getY() + 1);
+		uPos.setY(uPos.getY() - 1);
+		removed = true;
+	}
+	if (!removed)
+		lines.remove(uPos.getY() + 1);
+
+	// If the x position is greater than the length of the line
+	// then put the cursor position to the last char of the line
+	if (lines.getEntry(uPos.getY() + 1).length() > 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
 
 	system("CLS"); // clears screen
-	displayLines();
+	displayLines(); 
 } // end deleteLine()
 
 void Editor::undo()
@@ -152,7 +181,7 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getDelText().length() > 1)
+		if (tempCmd.getDelText().length() > 1 || tempCmd.getDelText() == "")
 			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
@@ -160,10 +189,10 @@ void Editor::undo()
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
 				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
+
+			if(uPos.getX() < lines.getEntry(uPos.getY()+1).length()-1)
 			uPos.setX(uPos.getX() + 1);
 		}
-
-
 		system("CLS"); // clears screen
 		displayLines();
 	}
@@ -216,12 +245,6 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
-			break;
-		case QUIT:
-			exit(1);
-			break;
-		case ESCAPE:
-			exit(1);
 			break;
 		default:
 			count = 0;
