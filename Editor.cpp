@@ -196,7 +196,7 @@ void Editor::undo()
 		}
 
 		// This stops the x cursor from going out of bounds
-		if (uPos.getX() > lines.getEntry(uPos.getY() + 1).length())
+		if (uPos.getX() >= lines.getEntry(uPos.getY() + 1).length())
 			uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
 		//This stops the x-coord from going negative.
 		if (uPos.getX() < 0)
