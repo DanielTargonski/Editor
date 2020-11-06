@@ -209,6 +209,8 @@ void Editor::undo()
 
 void Editor::run()
 {
+	displayLines();
+
 	int lengthOfLines{};
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
