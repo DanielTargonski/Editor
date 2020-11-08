@@ -269,4 +269,4 @@ void Editor::run()
 	lengthOfLines = lines.getLength();
 	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
 		cout << "\n\n\n\n\n";
-} // end run()
+} // end run

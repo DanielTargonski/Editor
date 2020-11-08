@@ -1,7 +1,16 @@
 /**
 The Editor class currently reads from the Command line
 a text fileName and outputs it in the console.
-You can move the cursor up, down, left, and right.
+Commands:
+h or left arrow key: Move left
+l or right arrow key: Move right
+j or down arrow key: Move down
+k or up arrow key: Move up
+q: Exits the editor.
+x: Delete character.
+dd: Delete's line the cursor position is on.
+u: Undo last deletion.
+
 @file Editor.h
 */
 
@@ -24,8 +33,6 @@ private:
 	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
-
-	//CommandPlus cmd;
 
 public:
 	// Does nothing for now.
