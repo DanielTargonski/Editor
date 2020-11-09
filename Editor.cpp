@@ -233,6 +233,8 @@ void Editor::InsertMode()
 			break;
 		}
 
+		// WIP
+		// TO DO - FIX CURSOR LOCATION
 		if (userInput == ENTER)
 		{
 			lines.insert(uPos.getY() + 2, "");
