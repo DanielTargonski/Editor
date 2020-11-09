@@ -262,6 +262,7 @@ void Editor::run()
 			break;
 		} // end switch
 	} // end while
+
 	// Creates space so that the text doesn't get obstructed by the
 	// closing of terminal message.
 	lengthOfLines = lines.getLength();
