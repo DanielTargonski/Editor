@@ -224,7 +224,7 @@ void Editor::InsertMode()
 	while (insertMode)
 	{
 		// Get user input with echo 
-		userInput = _getwche(); 
+		userInput = _getwche();
 
 		// Append to the last position in position y
 		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
@@ -239,7 +239,7 @@ void Editor::InsertMode()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 
-		if (_getwch() == 27)
+		if (userInput == ESCAPE)
 		{
 			insertMode = false;
 			// Reset cursor
@@ -251,8 +251,6 @@ void Editor::InsertMode()
 
 void Editor::run()
 {
-	const char QUIT = 'q';
-	const int ESCAPE = 27;
 	unsigned int count{};
 	CommandPlus cmd;
 
@@ -299,12 +297,6 @@ void Editor::run()
 			break;
 		case 'i':
 			InsertMode();
-			break;
-		case QUIT:
-			exit(1);
-			break;
-		case ESCAPE:
-			exit(1);
 			break;
 		default:
 			count = 0;

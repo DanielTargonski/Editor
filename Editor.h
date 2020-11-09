@@ -25,7 +25,8 @@ private:
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
 
-	//CommandPlus cmd;
+	const char QUIT = 'q';
+	const int ESCAPE = 27;
 
 public:
 	// Does nothing for now.
