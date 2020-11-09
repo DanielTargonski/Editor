@@ -44,4 +44,3 @@ int CommandPlus::getXLocation()
 {
 	return location.getX();
 }
-

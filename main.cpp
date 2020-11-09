@@ -21,6 +21,5 @@ int main(int argc, const char * argv[])
 
 	Editor miniVi(argv[1]);
 	system("CLS"); // clears screen
-	miniVi.displayLines();
 	miniVi.run();
 }
