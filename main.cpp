@@ -12,6 +12,10 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
+	string keywords[50];
+	ifstream inKeywords("keywords.txt");
+	string keyword;
+
 	// argv[] reads in from the command line.
 	if (argc < 1)
 	{
