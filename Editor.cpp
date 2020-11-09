@@ -226,6 +226,14 @@ void Editor::InsertMode()
 		// Get user input with echo 
 		userInput = _getwche();
 
+		if (userInput == ESCAPE)
+		{
+			insertMode = false;
+			// Reset cursor
+			uPos.setX(uPos.getX() - 1);
+			placeCursorAt(uPos);
+		}
+
 		// Append to the last position in position y
 		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
 
@@ -239,13 +247,6 @@ void Editor::InsertMode()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 
-		if (userInput == ESCAPE)
-		{
-			insertMode = false;
-			// Reset cursor
-			uPos.setX(uPos.getX() - 1);
-			placeCursorAt(uPos);
-		}
 	}
 }
 
