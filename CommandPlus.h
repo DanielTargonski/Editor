@@ -13,7 +13,7 @@ class CommandPlus {
 private:
 	char command{};
 	Point location;
-	string deletedText;
+	string value;
 
 public:
 	// Default constructor.
@@ -36,14 +36,14 @@ public:
 	@post  Sets the private member "deletedText".
 	@param _delText is a string that will set the private
 	"deletedText" member. */
-	void setDelText(const string& _delText);
+	void setValue(const string& _value);
 
 	/** Getter method for private member "deletedText".
 	@pre  There must be something stored in the deletedText string.
 	@post  None.
 	@return  Returns the string stored in the private member "deletedText".
 	*/
-	string getDelText();
+	string getValue();
 
 	/** Saves the (x,y) pair into the private "location" Point object.
 	@pre  None.

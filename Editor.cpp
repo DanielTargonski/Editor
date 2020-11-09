@@ -115,7 +115,7 @@ void Editor::deleteChar()
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		CommandPlus cmd;
-		cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
 	} // end if
@@ -134,7 +134,7 @@ void Editor::deleteLine()
 {
 	bool removed = false;
 	CommandPlus cmd;
-	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
+	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
@@ -178,15 +178,15 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getDelText().length() > 1 || tempCmd.getDelText() == "")
-			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
+		if (tempCmd.getValue().length() > 1 || tempCmd.getValue() == "")
+			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
 
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
-				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
+				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
 			// This increments the x position as you are undoing as long as
 			// the length of the line is longer than the x position.
 			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
