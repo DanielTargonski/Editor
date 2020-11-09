@@ -98,4 +98,6 @@ public:
 	@post  Inserts deleted char/string back into lines.
 	*/
 	void undo();
+
+	void InsertMode();
 };
