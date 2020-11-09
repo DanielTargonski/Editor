@@ -20,7 +20,7 @@ void Editor::displayLines()
 		cout << lines.getEntry(position) << "\n";
 
 	placeCursorAt(uPos);
-} // end displayLines()
+} // end displayLines
 
 Editor::Editor()
 {
@@ -37,14 +37,14 @@ Editor::Editor(string fileName)
 	{
 		if (inFile.fail())
 			throw invalid_argument("File failed to opened.");
-	} // end try
+	}
 	catch (const invalid_argument& invArg)
 	{
 		cout << invArg.what() << endl <<
 			"Please check the file name for accuracy and ensure it's in "
 			<< "the proper directory.\n";
 		exit(1);
-	} // end catch
+	} // end try-catch
 
 	// Loop reads a line into the "temp" string and
 	// inserts it into the back of the ADT list "lines".
@@ -54,7 +54,7 @@ Editor::Editor(string fileName)
 		lines.insert(lineCounter, temp);
 		lineCounter++;
 	} // end while
-} // end Editor(string fileName)
+} // end Editor
 
 void Editor::moveDown()
 {
@@ -73,7 +73,7 @@ void Editor::moveDown()
 		uPos.setY(uPos.getY() + 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveDown()
+} // end moveDown
 
 void Editor::moveUp()
 {
@@ -88,7 +88,7 @@ void Editor::moveUp()
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveUp()
+} // end moveUp
 
 void Editor::moveLeft()
 {
@@ -108,17 +108,17 @@ void Editor::moveRight()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveRight()
+} // end moveRight
 
 void Editor::deleteChar()
 {
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		CommandPlus cmd;
-		cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
-	}
+	} // end if
 
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
@@ -128,20 +128,46 @@ void Editor::deleteChar()
 
 	system("CLS"); // clears screen
 	displayLines();
-} // end deleteChar()
+} // end deleteChar
 
 void Editor::deleteLine()
 {
+	bool removed = false;
 	CommandPlus cmd;
-	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
+	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
-	lines.remove(uPos.getY() + 1);
+	// This prevents the last node from being deleted;
+	// instead replacing it with an empty string.
+	if (lines.getLength() == 1)
+	{
+		lines.replace(1, "");
+		removed = true;
+	} // end if
+
+	// When deleting a line, the Y-coord should be decremented so to prevent
+	// the cursor from being on an empty line.
+	if (uPos.getY() > 0 && !removed)
+	{
+		lines.remove(uPos.getY() + 1);
+		uPos.setY(uPos.getY() - 1);
+		removed = true;
+	} // end if
+	if (!removed)
+		lines.remove(uPos.getY() + 1);
+
+	// If the x position is greater than the length of the new line
+	// then put the cursor position to the last char of the line.
+	// If the line is empty (a "" string) then set 'x' coord to 0.
+	if (lines.getEntry(uPos.getY() + 1).length() > 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
 
 	system("CLS"); // clears screen
 	displayLines();
-} // end deleteLine()
+} // end deleteLine
 
 void Editor::undo()
 {
@@ -152,27 +178,40 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getDelText().length() > 1)
-			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
+		if (tempCmd.getValue().length() > 1 || tempCmd.getValue() == "")
+			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
+
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
-				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
-			uPos.setX(uPos.getX() + 1);
+				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
+			// This increments the x position as you are undoing as long as
+			// the length of the line is longer than the x position.
+			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
+			// else statement.
+			if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1)
+				uPos.setX(uPos.getX() + 1);
 		}
 
+		// This stops the x cursor from going out of bounds
+		if (uPos.getX() >= lines.getEntry(uPos.getY() + 1).length())
+			uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		//This stops the x-coord from going negative.
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		system("CLS"); // clears screen
 		displayLines();
-	}
-}
+	} // end if
+} // end undo
 
 void Editor::run()
 {
-	const char QUIT = 'q';
-	const int ESCAPE = 27;
+	displayLines();
+
+	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
 
@@ -216,16 +255,17 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
-			break;
-		case QUIT:
-			exit(1);
-			break;
-		case ESCAPE:
-			exit(1);
+			count = 0;
 			break;
 		default:
 			count = 0;
 			break;
-		}
+		} // end switch
 	} // end while
-} // end run()
+
+	// Creates space so that the text doesn't get obstructed by the
+	// closing of terminal message.
+	lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+} // end run

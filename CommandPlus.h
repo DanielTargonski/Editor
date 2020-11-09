@@ -13,7 +13,7 @@ class CommandPlus {
 private:
 	char command{};
 	Point location;
-	string deletedText;
+	string value;
 
 public:
 	// Default constructor.
@@ -22,7 +22,7 @@ public:
 
 	/** Returns the command char.
 	@pre  None.
-	@post  Returns private member char "command". 
+	@post  Returns private member char "command".
 	@return  returns the character of the private member "command" */
 	char getCommand();
 
@@ -31,18 +31,39 @@ public:
 	@post  Private member command char is set. */
 	void setCommand();
 
-	/** Sets the string "deletedText"
+	/** Sets the string "value"
 	@pre  None.
-	@post  Sets the private member "deletedText".
-	@param _delText is a string that will set the private
+	@post  Sets the private member "value".
+	@param _value is a string that will set the private
 	"deletedText" member. */
-	void setDelText(const string& _delText);
+	void setValue(const string& _value);
 
-	string getDelText();
+	/** Getter method for private member "value".
+	@pre  There must be something stored in the value string.
+	@post  None.
+	@return  Returns the string stored in the private member "value".
+	*/
+	string getValue();
 
+	/** Saves the (x,y) pair into the private "location" Point object.
+	@pre  None.
+	@post  The (x,y) position of the user is saved into private Point
+	object member "location".
+	@param  _location  Takes in the current users (x,y) coordinates.
+	*/
 	void setLocation(const Point& _location);
 
+	/** Getter method to return the Y coord in private member "location".
+	@pre  None.
+	@post None.
+	@return  Returns the 'y' coordinate stored in private member "location".
+	*/
 	int getYLocation();
 
+	/** Getter method to retrieve the X coordinate in private member "location".
+	@pre  None.
+	@post  None.
+	@return  Returns the 'x' coordinate stored in private member "location".
+	*/
 	int getXLocation();
 };
