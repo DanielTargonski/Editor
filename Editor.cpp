@@ -102,7 +102,7 @@ void Editor::moveLeft()
 void Editor::moveRight()
 {	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() 
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -215,17 +215,17 @@ void Editor::InsertMode()
 	undoSt.push(tmpCommand);
 
 	// Set and move cursor 1+
-	uPos.setX(uPos.getX() + 1);
-	placeCursorAt(uPos);
+	// uPos.setX(uPos.getX() + 1);
+	// placeCursorAt(uPos);
 
 	char userInput{};
 
 	while (true)
 	{
 		// Get user input
-		userInput = _getche();
+		userInput = _getch();
 
-		if (userInput == 27)
+		if (userInput == ESCAPE)
 		{
 			// Reset cursor
 			uPos.setX(uPos.getX() - 1);
@@ -233,6 +233,16 @@ void Editor::InsertMode()
 			break;
 		}
 
+		if (userInput == ENTER)
+		{
+			lines.insert(uPos.getY() + 2, "");
+			uPos.setX(0);
+			uPos.setY(uPos.getY() + 2);
+			placeCursorAt(uPos);
+			system("CLS"); // clears screen
+			displayLines();
+			continue;
+		}
 
 		// Replace new node with modified string
 		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
