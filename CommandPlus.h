@@ -31,17 +31,17 @@ public:
 	@post  Private member command char is set. */
 	void setCommand();
 
-	/** Sets the string "deletedText"
+	/** Sets the string "value"
 	@pre  None.
-	@post  Sets the private member "deletedText".
-	@param _delText is a string that will set the private
+	@post  Sets the private member "value".
+	@param _value is a string that will set the private
 	"deletedText" member. */
 	void setValue(const string& _value);
 
-	/** Getter method for private member "deletedText".
-	@pre  There must be something stored in the deletedText string.
+	/** Getter method for private member "value".
+	@pre  There must be something stored in the value string.
 	@post  None.
-	@return  Returns the string stored in the private member "deletedText".
+	@return  Returns the string stored in the private member "value".
 	*/
 	string getValue();
 
