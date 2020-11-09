@@ -235,6 +235,7 @@ void Editor::InsertMode()
 
 		// WIP
 		// TO DO - FIX CURSOR LOCATION
+		// IF ENTER ON STRING, SPLIT PROPERLY
 		if (userInput == ENTER)
 		{
 			lines.insert(uPos.getY() + 2, "");
