@@ -34,6 +34,9 @@ private:
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
 
+	const char QUIT = 'q';
+	const int ESCAPE = 27;
+
 public:
 	// Does nothing for now.
 	Editor();
