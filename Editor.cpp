@@ -132,12 +132,38 @@ void Editor::deleteChar()
 
 void Editor::deleteLine()
 {
+	bool removed = false;
 	CommandPlus cmd;
 	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
-	lines.remove(uPos.getY() + 1);
+	// This prevents the last node from being deleted;
+	// instead replacing it with an empty string.
+	if (lines.getLength() == 1)
+	{
+		lines.replace(1, "");
+		removed = true;
+	} // end if
+
+	// When deleting a line, the Y-coord should be decremented so to prevent
+	// the cursor from being on an empty line.
+	if (uPos.getY() > 0 && !removed)
+	{
+		lines.remove(uPos.getY() + 1);
+		uPos.setY(uPos.getY() - 1);
+		removed = true;
+	} // end if
+	if (!removed)
+		lines.remove(uPos.getY() + 1);
+
+	// If the x position is greater than the length of the new line
+	// then put the cursor position to the last char of the line.
+	// If the line is empty (a "" string) then set 'x' coord to 0.
+	if (lines.getEntry(uPos.getY() + 1).length() > 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
 
 	system("CLS"); // clears screen
 	displayLines();
@@ -152,21 +178,33 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getValue().length() > 1)
+		if (tempCmd.getValue().length() > 1 || tempCmd.getValue() == "")
 			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
+
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
 				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
-			uPos.setX(uPos.getX() + 1);
+			// This increments the x position as you are undoing as long as
+			// the length of the line is longer than the x position.
+			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
+			// else statement.
+			if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1)
+				uPos.setX(uPos.getX() + 1);
 		}
 
+		// This stops the x cursor from going out of bounds
+		if (uPos.getX() >= lines.getEntry(uPos.getY() + 1).length())
+			uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		//This stops the x-coord from going negative.
+		if (uPos.getX() < 0)
+			uPos.setX(0);
 
 		system("CLS"); // clears screen
 		displayLines();
-	}
+	} // end if
 }
 
 void Editor::InsertMode()
