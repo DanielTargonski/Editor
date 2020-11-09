@@ -36,6 +36,7 @@ private:
 
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
+	const int ENTER{ 13 };
 
 public:
 	// Does nothing for now.
