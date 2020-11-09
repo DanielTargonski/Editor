@@ -207,6 +207,48 @@ void Editor::undo()
 	} // end if
 } // end undo
 
+void Editor::InsertMode()
+{
+	CommandPlus tmpCommand;
+	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+
+	undoSt.push(tmpCommand);
+
+	// Set and move cursor 1+
+	uPos.setX(uPos.getX() + 1);
+	placeCursorAt(uPos);
+
+	char userInput{};
+
+	while (true)
+	{
+		// Get user input
+		userInput = _getche();
+
+		if (userInput == 27)
+		{
+			// Reset cursor
+			uPos.setX(uPos.getX() - 1);
+			placeCursorAt(uPos);
+			break;
+		}
+
+
+		// Replace new node with modified string
+		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
+
+		system("CLS"); // clears screen
+		displayLines();
+
+		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+		undoSt.push(tmpCommand);
+
+		// Fix and move to new position
+		uPos.setX(uPos.getX() + 1);
+		placeCursorAt(uPos);
+	}
+}
+
 void Editor::run()
 {
 	displayLines();
@@ -255,6 +297,10 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
+			count = 0;
+			break;
+		case 'i':
+			InsertMode();
 			count = 0;
 			break;
 		default:
