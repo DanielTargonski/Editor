@@ -4,7 +4,6 @@
 */
 #pragma once
 #include<conio.h>
-#include<vector>
 #include"point.h"
 #include"Editor.h"
 
@@ -13,7 +12,7 @@ class CommandPlus {
 private:
 	char command{};
 	Point location;
-	string deletedText;
+	string value;
 
 public:
 	// Default constructor.
@@ -36,9 +35,9 @@ public:
 	@post  Sets the private member "deletedText".
 	@param _delText is a string that will set the private
 	"deletedText" member. */
-	void setDelText(const string& _delText);
+	void setValue(const string& _value);
 
-	string getDelText();
+	string getValue();
 
 	void setLocation(const Point& _location);
 

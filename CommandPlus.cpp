@@ -20,14 +20,14 @@ void CommandPlus::setCommand()
 	command = _getwch();
 }
 
-void CommandPlus::setDelText(const string& _delText)
+void CommandPlus::setValue(const string& _value)
 {
-	deletedText = _delText;
+	value = _value;
 }
 
-string CommandPlus::getDelText()
+string CommandPlus::getValue()
 {
-	return deletedText;
+	return value;
 }
 
 void CommandPlus::setLocation(const Point& _location)

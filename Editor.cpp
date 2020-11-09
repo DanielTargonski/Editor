@@ -115,7 +115,7 @@ void Editor::deleteChar()
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		CommandPlus cmd;
-		cmd.setDelText(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
+		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
 	}
@@ -133,7 +133,7 @@ void Editor::deleteChar()
 void Editor::deleteLine()
 {
 	CommandPlus cmd;
-	cmd.setDelText(lines.getEntry(uPos.getY() + 1));
+	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
 
@@ -152,14 +152,14 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getDelText().length() > 1)
-			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getDelText());
+		if (tempCmd.getValue().length() > 1)
+			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
 		// Else, we are restoring a character, which requires the string
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
 			lines.replace(tempCmd.getYLocation() + 1,
-				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getDelText()));
+				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
 			uPos.setX(uPos.getX() + 1);
 		}
 
@@ -172,26 +172,41 @@ void Editor::undo()
 void Editor::InsertMode()
 {
 	bool insertMode{ true };
+	CommandPlus tmpCommand;
+	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+	
+	undoSt.push(tmpCommand);
+
+	// Set and move cursor 1+
+	uPos.setX(uPos.getX() + 1);
+	placeCursorAt(uPos);
+
+	char userInput{};
+
 	while (insertMode)
 	{
-		// Set and move cursor 1+
-		uPos.setX(uPos.getX() + 1);
-		placeCursorAt(uPos);
-
-		// Get user input
-		string userInput{};
-		getline(cin, userInput);
+		// Get user input with echo 
+		userInput = _getwche(); 
 
 		// Append to the last position in position y
-		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).append(userInput));
+		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
+
+		system("CLS"); // clears screen
+		displayLines();
+
+		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+		undoSt.push(tmpCommand);
 
 		// Fix and move to new position
-		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 
 		if (_getwch() == 27)
 		{
 			insertMode = false;
+			// Reset cursor
+			uPos.setX(uPos.getX() - 1);
+			placeCursorAt(uPos);
 		}
 	}
 }
