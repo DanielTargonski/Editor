@@ -20,7 +20,7 @@ void Editor::displayLines()
 		cout << lines.getEntry(position) << "\n";
 
 	placeCursorAt(uPos);
-} // end displayLines()
+} // end displayLines
 
 Editor::Editor()
 {
@@ -37,14 +37,14 @@ Editor::Editor(string fileName)
 	{
 		if (inFile.fail())
 			throw invalid_argument("File failed to opened.");
-	} // end try
+	}
 	catch (const invalid_argument& invArg)
 	{
 		cout << invArg.what() << endl <<
 			"Please check the file name for accuracy and ensure it's in "
 			<< "the proper directory.\n";
 		exit(1);
-	} // end catch
+	} // end try-catch
 
 	// Loop reads a line into the "temp" string and
 	// inserts it into the back of the ADT list "lines".
@@ -54,7 +54,7 @@ Editor::Editor(string fileName)
 		lines.insert(lineCounter, temp);
 		lineCounter++;
 	} // end while
-} // end Editor(string fileName)
+} // end Editor
 
 void Editor::moveDown()
 {
@@ -73,7 +73,7 @@ void Editor::moveDown()
 		uPos.setY(uPos.getY() + 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveDown()
+} // end moveDown
 
 void Editor::moveUp()
 {
@@ -88,7 +88,7 @@ void Editor::moveUp()
 		uPos.setY(uPos.getY() - 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveUp()
+} // end moveUp
 
 void Editor::moveLeft()
 {
@@ -108,7 +108,7 @@ void Editor::moveRight()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 	} // end if
-} // end moveRight()
+} // end moveRight
 
 void Editor::deleteChar()
 {
@@ -118,7 +118,7 @@ void Editor::deleteChar()
 		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
-	}
+	} // end if
 
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
@@ -128,7 +128,7 @@ void Editor::deleteChar()
 
 	system("CLS"); // clears screen
 	displayLines();
-} // end deleteChar()
+} // end deleteChar
 
 void Editor::deleteLine()
 {
@@ -167,7 +167,7 @@ void Editor::deleteLine()
 
 	system("CLS"); // clears screen
 	displayLines();
-} // end deleteLine()
+} // end deleteLine
 
 void Editor::undo()
 {
@@ -205,53 +205,13 @@ void Editor::undo()
 		system("CLS"); // clears screen
 		displayLines();
 	} // end if
-}
-
-void Editor::InsertMode()
-{
-	bool insertMode{ true };
-	CommandPlus tmpCommand;
-	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
-	
-	undoSt.push(tmpCommand);
-
-	// Set and move cursor 1+
-	uPos.setX(uPos.getX() + 1);
-	placeCursorAt(uPos);
-
-	char userInput{};
-
-	while (insertMode)
-	{
-		// Get user input with echo 
-		userInput = _getwche();
-
-		if (userInput == ESCAPE)
-		{
-			insertMode = false;
-			// Reset cursor
-			uPos.setX(uPos.getX() - 1);
-			placeCursorAt(uPos);
-		}
-
-		// Append to the last position in position y
-		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
-
-		system("CLS"); // clears screen
-		displayLines();
-
-		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
-		undoSt.push(tmpCommand);
-
-		// Fix and move to new position
-		uPos.setX(uPos.getX() + 1);
-		placeCursorAt(uPos);
-
-	}
-}
+} // end undo
 
 void Editor::run()
 {
+	displayLines();
+
+	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
 
@@ -295,13 +255,17 @@ void Editor::run()
 			break;
 		case 'u':
 			undo();
-			break;
-		case 'i':
-			InsertMode();
+			count = 0;
 			break;
 		default:
 			count = 0;
 			break;
-		}
+		} // end switch
 	} // end while
-} // end run()
+
+	// Creates space so that the text doesn't get obstructed by the
+	// closing of terminal message.
+	lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+} // end run
