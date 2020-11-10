@@ -22,6 +22,8 @@ u: Undo last deletion.
 #include<Windows.h>
 #include"CommandPlus.h"
 #include"LinkedStack.h"
+#include"binarySearch.h"
+#include<sstream>
 
 using namespace std;
 
@@ -33,6 +35,9 @@ private:
 	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
+
+	// List holding all keywords to be colored
+	string keyWords[50];
 
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
@@ -52,6 +57,9 @@ public:
 	 @Pre  The list must not be empty.
 	 @Post  The list is output to the console. */
 	void displayLines();
+
+	//WIP
+	void displayLines2();
 
 	/** Moves cursor down.
 	@pre  There must be text below current location of cursor.
@@ -99,6 +107,8 @@ public:
 	@post  Inserts deleted char/string back into lines.
 	*/
 	void undo();
+
+	void colorText(int value);
 
 	void InsertMode();
 };

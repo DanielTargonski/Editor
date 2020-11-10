@@ -22,6 +22,29 @@ void Editor::displayLines()
 	placeCursorAt(uPos);
 } // end displayLines
 
+void Editor::displayLines2()
+{
+
+	int position;
+	string nextLine, nextWord;
+
+	for (position = 1; position <= lines.getLength(); position++)
+	{
+		nextLine = lines.getEntry(position);
+
+		istringstream iss(nextLine);
+
+		while (iss >> nextWord)
+		{
+			//using the binary search, check whether this a keyword (if yes - color blue)
+		}
+		cout << lines.getEntry(position) << "\n";
+	}
+
+
+	placeCursorAt(uPos);
+} // end displayLines
+
 Editor::Editor()
 {
 } // end Editor()
@@ -102,7 +125,7 @@ void Editor::moveLeft()
 void Editor::moveRight()
 {	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() 
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -123,6 +146,7 @@ void Editor::deleteChar()
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 
+	// Update x position.
 	if (uPos.getX() > 0)
 		uPos.setX(uPos.getX() - 1);
 
@@ -215,8 +239,11 @@ void Editor::InsertMode()
 	undoSt.push(tmpCommand);
 
 	// Set and move cursor 1+
-	// uPos.setX(uPos.getX() + 1);
-	// placeCursorAt(uPos);
+	//if (uPos.getX() > 0)
+	//{
+	//	uPos.setX(uPos.getX() + 1);
+	//	placeCursorAt(uPos);
+	//}
 
 	char userInput{};
 
@@ -240,7 +267,7 @@ void Editor::InsertMode()
 		{
 			lines.insert(uPos.getY() + 2, "");
 			uPos.setX(0);
-			uPos.setY(uPos.getY() + 2);
+			uPos.setY(uPos.getY() + 1);
 			placeCursorAt(uPos);
 			system("CLS"); // clears screen
 			displayLines();
@@ -260,6 +287,18 @@ void Editor::InsertMode()
 		uPos.setX(uPos.getX() + 1);
 		placeCursorAt(uPos);
 	}
+}
+
+void Editor::colorText(int value) {
+
+	COORD coord;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	FlushConsoleInputBuffer(hConsole);
+
+	SetConsoleTextAttribute(hConsole, value + 240);
+
 }
 
 void Editor::run()
