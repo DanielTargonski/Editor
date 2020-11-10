@@ -1,3 +1,4 @@
 #pragma once
 
-int binarySearch(const int anArray[], int first, int last, int target);
+template<typename T>
+int binarySearch(const T anArray[], int first, int last, T target);

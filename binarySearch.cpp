@@ -16,7 +16,8 @@
  @param target  The search key.
  @return  Either index, such that anArray[index] == target, or -1. 
  */
-int binarySearch(const int anArray[], int first, int last, int target)
+template<typename T>
+int binarySearch(const T anArray[], int first, int last, T target)
 {
    int index;
    if (first > last)

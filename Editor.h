@@ -22,7 +22,7 @@ u: Undo last deletion.
 #include<Windows.h>
 #include"CommandPlus.h"
 #include"LinkedStack.h"
-#include"binarySearch.h"
+#include"BinarySearch.h"
 #include<sstream>
 
 using namespace std;
@@ -37,7 +37,7 @@ private:
 	Point uPos;
 
 	// List holding all keywords to be colored
-	string keyWords[50];
+	string keyWords[60];
 
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
@@ -111,4 +111,11 @@ public:
 	void colorText(int value);
 
 	void InsertMode();
+
+	template<typename T>
+	void selectionSort(T arr[], int size);
+
+	void outputToFile(string arr[], int size, ostream& outData);
+
+	void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
 };
