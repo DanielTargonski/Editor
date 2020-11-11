@@ -22,27 +22,27 @@ void Editor::displayLines()
 	placeCursorAt(uPos);
 } // end displayLines
 
-void Editor::displayLines2()
-{
-
-	int position;
-	string nextLine, nextWord;
-
-	for (position = 1; position <= lines.getLength(); position++)
-	{
-		nextLine = lines.getEntry(position);
-		istringstream iss(nextLine);
-
-		while (iss >> nextWord)
-		{
-			//using the binary search, check whether this a keyword (if yes - color blue)
-			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-				colorText(0);
-		}
-		cout << lines.getEntry(position) << "\n";
-	}
-	placeCursorAt(uPos);
-} // end displayLines
+//void Editor::displayLines2()
+//{
+//
+//	int position;
+//	string nextLine, nextWord;
+//
+//	for (position = 1; position <= lines.getLength(); position++)
+//	{
+//		nextLine = lines.getEntry(position);
+//		istringstream iss(nextLine);
+//
+//		while (iss >> nextWord)
+//		{
+//			//using the binary search, check whether this a keyword (if yes - color blue)
+//			if (binarySearch<string>(keyWords, 0, 59, nextWord) != -1)
+//				colorText(0);
+//		}
+//		cout << lines.getEntry(position) << "\n";
+//	}
+//	placeCursorAt(uPos);
+//} // end displayLines
 
 Editor::Editor()
 {
@@ -345,7 +345,7 @@ void Editor::run()
 	selectionSort(keyWords, 60);
 	outputToFile(keyWords, 60, outKeywords);
 
-	displayLines2();
+	displayLines();
 
 	int lengthOfLines{};
 	unsigned int count{};
