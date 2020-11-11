@@ -13,6 +13,18 @@ void placeCursorAt(Point coordinate) {
 		coord);
 } // end placeCursorAt
 
+void colorText(int value) {
+
+	COORD coord;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	FlushConsoleInputBuffer(hConsole);
+
+	SetConsoleTextAttribute(hConsole, value + 240);
+
+}
+
 void Editor::displayLines()
 {
 	int position;
