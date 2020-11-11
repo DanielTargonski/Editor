@@ -4,7 +4,8 @@
 
 #include"Editor.h"
 
-void placeCursorAt(Point coordinate) {
+void placeCursorAt(Point coordinate) 
+{
 	COORD coord;
 	coord.X = coordinate.getX();
 	coord.Y = coordinate.getY();
@@ -13,16 +14,12 @@ void placeCursorAt(Point coordinate) {
 		coord);
 } // end placeCursorAt
 
-void colorText(int value) {
-
+void colorText(int value) 
+{
 	COORD coord;
-
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
 	FlushConsoleInputBuffer(hConsole);
-
 	SetConsoleTextAttribute(hConsole, value + 240);
-
 }
 
 void Editor::displayLines()
@@ -232,15 +229,13 @@ void Editor::undo()
 void Editor::InsertMode()
 {
 	CommandPlus tmpCommand;
-	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
-	undoSt.push(tmpCommand);
 
-	char userInput{};
+	int userInput{};
 
 	while (true)
 	{
 		// Get user input
-		userInput = _getch();
+		userInput = _getwch();
 
 		if (userInput == ESCAPE)
 		{
@@ -266,6 +261,10 @@ void Editor::InsertMode()
 			// Insert new node next to cursor node with new string
 			lines.insert(uPos.getY() + 2, second_half);
 
+			// When undoing - it should undo the new node that was inserted
+			tmpCommand.setValue(lines.getEntry(uPos.getY() + 2));
+			undoSt.push(tmpCommand);
+
 			// New coordinate
 			uPos.setX(0);
 			uPos.setY(uPos.getY() + 1);
@@ -275,14 +274,20 @@ void Editor::InsertMode()
 			continue;
 		}
 
+		/*if (userInput == BACKSPACE)
+		{
+			uPos.setX(uPos.getX() - 1);
+			placeCursorAt(uPos);
+		}*/
+
 		// WIP
 		// TRYING TO USE ARROW KEYS ON INSERT MODE
 
 		//switch (userInput)
 		//{
-		//case -32: // down arrow key
+		//case 80: // down arrow key
 		//	moveDown();
-		//	continue;
+		//	break;
 		//case 72: // up arrow key
 		//	moveUp();
 		//	break;
@@ -294,17 +299,20 @@ void Editor::InsertMode()
 		//	break;
 		//}
 
-		// Replace new node with modified string
-		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
+		// char
 
-		system("CLS"); // clears screen
-		displayLines();
-
+		// When undoing it should undo what will be replaces
 		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
 		undoSt.push(tmpCommand);
 
+		// Replace new node with modified string
+		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
+		
 		// Fix and move to new position
 		uPos.setX(uPos.getX() + 1);
+
+		system("CLS"); // clears screen
+		displayLines();
 	}
 }
 
@@ -324,7 +332,7 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // down arrow key
+		case 80: //VK_DOWN: // down arrow key
 			moveDown();
 			count = 0;
 			break;

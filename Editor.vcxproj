@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binarySearch.cpp" />
     <ClCompile Include="CommandPlus.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="main.cpp" />
