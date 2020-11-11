@@ -112,8 +112,8 @@ public:
 
 	void InsertMode();
 
-	template<typename T>
-	void selectionSort(T arr[], int size);
+	template<typename TYPE>
+	void selectionSort(TYPE arr[], int size);
 
 	void outputToFile(string arr[], int size, ostream& outData);
 

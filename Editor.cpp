@@ -31,7 +31,6 @@ void Editor::displayLines2()
 	for (position = 1; position <= lines.getLength(); position++)
 	{
 		nextLine = lines.getEntry(position);
-
 		istringstream iss(nextLine);
 
 		while (iss >> nextWord)
@@ -309,8 +308,8 @@ void Editor::outputToFile(string arr[], int size, ostream& outData)
 	}
 }
 
-template<typename T>
-void Editor::selectionSort(T arr[], int size)
+template<typename TYPE>
+void Editor::selectionSort(TYPE arr[], int size)
 {
 	int curString{};
 	for (curString = 0; curString < size; curString++)
