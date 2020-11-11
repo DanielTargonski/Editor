@@ -17,8 +17,10 @@ u: Undo last deletion.
 #pragma once
 #include"LinkedList.h"
 #include"point.h"
-#include<string>
+#include<vector>
+#include<algorithm>
 #include<fstream>
+#include<array>
 #include<Windows.h>
 #include"CommandPlus.h"
 #include"LinkedStack.h"
@@ -49,6 +51,8 @@ public:
 	@Pre  The passed string must be the name of a file and in the directory
 	@Post  A list is created from the file that was passed as a string parameter */
 	Editor(string fileName);
+
+	Editor(string fileName, string keywordFile);
 
 	/** displays everything in lines
 	 @Pre  The list must not be empty.

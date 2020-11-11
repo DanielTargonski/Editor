@@ -65,6 +65,47 @@ Editor::Editor(string fileName)
 	} // end while
 } // end Editor
 
+Editor::Editor(string fileName, string keywordFile)
+{
+	ifstream inFile(fileName);
+	string temp;
+	int lineCounter = 1;
+
+	//make sure file opened correctly
+	try
+	{
+		if (inFile.fail())
+			throw invalid_argument("File failed to opened.");
+	}
+	catch (const invalid_argument& invArg)
+	{
+		cout << invArg.what() << endl <<
+			"Please check the file name for accuracy and ensure it's in "
+			<< "the proper directory.\n";
+		exit(1);
+	} // end try-catch
+
+	// Loop reads a line into the "temp" string and
+	// inserts it into the back of the ADT list "lines".
+	while (!inFile.eof())
+	{
+		getline(inFile, temp);
+		lines.insert(lineCounter, temp);
+		lineCounter++;
+	} // end while
+
+	// Text file for highlighting
+	ifstream _file(keywordFile);
+	string key_words{};
+	vector<string> arr;
+	while (!_file.eof())
+	{
+		_file >> key_words;
+		arr.push_back(key_words);
+	}
+	sort(arr.begin(), arr.end());
+} // end Editor
+
 void Editor::moveDown()
 {
 	// Checks if the current Y position is less than the number of lines
