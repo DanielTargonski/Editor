@@ -36,7 +36,7 @@ void Editor::displayLines()
 //		while (iss >> nextWord)
 //		{
 //			//using the binary search, check whether this a keyword (if yes - color blue)
-//			if (binarySearch<string>(keyWords, 0, 59, nextWord) != -1)
+//			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
 //				colorText(0);
 //		}
 //		cout << lines.getEntry(position) << "\n";
@@ -48,11 +48,13 @@ Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string fileName)
+Editor::Editor(string fileName, const string _keyWords[], int size)
 {
 	ifstream inFile(fileName);
 	string temp;
 	int lineCounter = 1;
+	// Copies the keyWords from passed array into private member keyWords[].
+	copy(_keyWords[0],_keyWords[size], keyWords[0]);
 
 	//make sure file opened correctly
 	try
@@ -300,50 +302,10 @@ void Editor::colorText(int value)
 
 }
 
-void Editor::outputToFile(string arr[], int size, ostream& outData)
-{
-	for (int i = 0; i < size; i++)
-	{
-		outData << arr[i] << "\n";
-	}
-}
-
-template<typename TYPE>
-void Editor::selectionSort(TYPE arr[], int size)
-{
-	int curString{};
-	for (curString = 0; curString < size; curString++)
-	{
-		int minIndex = curString;
-		for (int j = curString + 1; j < size; j++)
-		{
-			if (arr[curString] > arr[j])
-				minIndex = j;
-		}
-		swap(arr[curString], arr[minIndex]);
-	} // end for
-} // end selectionSortFile
-
-void Editor::makeKeywordArray(string keywordArr[], int size, ifstream& inData)
-{
-	int i = 0;
-	string newWord;
-	while (inData.good())
-	{
-		//getline(inData, keywordArr[i]);
-		inData >> keywordArr[i];
-		i++;
-	}
-}
-
 void Editor::run()
 {
 	ifstream inKeywords("keywords.txt");
 	ofstream outKeywords("sortedKeywords.txt");
-
-	makeKeywordArray(keyWords, 60, inKeywords);
-	selectionSort(keyWords, 60);
-	outputToFile(keyWords, 60, outKeywords);
 
 	displayLines();
 

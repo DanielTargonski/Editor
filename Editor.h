@@ -35,8 +35,7 @@ private:
 	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
-
-	// List holding all keywords to be colored
+	// Holds key words to be highlighted.
 	string keyWords[60];
 
 	const char QUIT = 'q';
@@ -44,6 +43,7 @@ private:
 	const int ENTER{ 13 };
 
 public:
+
 	// Does nothing for now.
 	Editor();
 
@@ -51,7 +51,7 @@ public:
 	@param filename string, takes in a
 	@Pre  The passed string must be the name of a file and in the directory
 	@Post  A list is created from the file that was passed as a string parameter */
-	Editor(string fileName);
+	Editor(string fileName, const string _keyWords[], int size);
 
 	/** displays everything in lines
 	 @Pre  The list must not be empty.
@@ -112,10 +112,4 @@ public:
 
 	void InsertMode();
 
-	template<typename TYPE>
-	void selectionSort(TYPE arr[], int size);
-
-	void outputToFile(string arr[], int size, ostream& outData);
-
-	void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
 };
