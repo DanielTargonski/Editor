@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binarySearch.cpp" />
     <ClCompile Include="CommandPlus.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="PrecondViolatedExcep.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinarySearch.h" />
     <ClInclude Include="CommandPlus.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="LinkedList.h" />
@@ -158,7 +160,9 @@
     <ClInclude Include="StackInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="keywords.txt" />
     <Text Include="sample.txt" />
+    <Text Include="sortedKeywords.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

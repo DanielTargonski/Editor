@@ -20,6 +20,11 @@ void CommandPlus::setCommand()
 	command = _getwch();
 }
 
+void CommandPlus::setCommand(const char _command)
+{
+	command = _command;
+}
+
 void CommandPlus::setValue(const string& _value)
 {
 	value = _value;

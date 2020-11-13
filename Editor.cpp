@@ -22,11 +22,33 @@ void Editor::displayLines()
 	placeCursorAt(uPos);
 } // end displayLines
 
+// WIP
+//void Editor::displayLines2()
+//{
+//	int position;
+//	string nextLine, nextWord;
+//
+//	for (position = 1; position <= lines.getLength(); position++)
+//	{
+//		nextLine = lines.getEntry(position);
+//		istringstream iss(nextLine);
+//
+//		while (iss >> nextWord)
+//		{
+//			//using the binary search, check whether this a keyword (if yes - color blue)
+//			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
+//				colorText(1);
+//		}
+//		cout << lines.getEntry(position) << "\n";
+//	}
+//	placeCursorAt(uPos);
+//} // end displayLines
+
 Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string fileName)
+Editor::Editor(string fileName, const string _keyWords[], int size)
 {
 	ifstream inFile(fileName);
 	string temp;
@@ -55,6 +77,17 @@ Editor::Editor(string fileName)
 		lineCounter++;
 	} // end while
 } // end Editor
+
+void Editor::moveToEndOfConsole()
+{
+	uPos.setY(lines.getLength() - 1);
+	if (lines.getEntry(uPos.getY() + 1).length() - 1 >= 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
+
+	placeCursorAt(uPos);
+}
 
 void Editor::moveDown()
 {
@@ -133,6 +166,7 @@ void Editor::deleteChar()
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 
+	// Update x position.
 	if (uPos.getX() > 0)
 		uPos.setX(uPos.getX() - 1);
 
@@ -296,8 +330,31 @@ void Editor::InsertMode()
 	}
 }
 
+void Editor::colorText(int value) 
+{
+	COORD coord;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	FlushConsoleInputBuffer(hConsole);
+
+	SetConsoleTextAttribute(hConsole, value + 240);
+
+}
+
+void Editor::exitWithoutSaving()
+{
+	int lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+	exit(1);
+}
+
 void Editor::run()
 {
+	ifstream inKeywords("keywords.txt");
+	ofstream outKeywords("sortedKeywords.txt");
+
 	displayLines();
 
 	int lengthOfLines{};
@@ -350,6 +407,13 @@ void Editor::run()
 			insert_mode = true;
 			InsertMode();
 			count = 0;
+			break;
+		case ':':
+			cmd.setCommand();
+			if (cmd.getCommand() == ',')
+				moveToEndOfConsole();
+			else if (cmd.getCommand() == 'q')
+				exitWithoutSaving();
 			break;
 		default:
 			count = 0;
