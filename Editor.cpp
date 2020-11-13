@@ -352,18 +352,16 @@ void Editor::exitWithoutSaving()
 
 void Editor::run()
 {
-	ifstream inKeywords("keywords.txt");
-	ofstream outKeywords("sortedKeywords.txt");
-
 	displayLines();
 
+	bool run{ true };
 	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
 
-	// Keeps program running while users does not enter 'q' or ESC
+	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
-	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
+	while (run)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
