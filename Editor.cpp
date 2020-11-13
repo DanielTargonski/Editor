@@ -342,9 +342,12 @@ void Editor::colorText(int value)
 
 }
 
-char Editor::exitWithoutSaving()
+void Editor::exitWithoutSaving()
 {
-	return 'q';
+	int lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+	exit(1);
 }
 
 void Editor::run()
@@ -410,8 +413,7 @@ void Editor::run()
 			if (cmd.getCommand() == ',')
 				moveToEndOfConsole();
 			else if (cmd.getCommand() == 'q')
-				cmd.setCommand(exitWithoutSaving());
-
+				exitWithoutSaving();
 			break;
 		default:
 			count = 0;

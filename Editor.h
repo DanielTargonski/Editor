@@ -126,9 +126,8 @@ public:
 
 	/** Exits program without saving to file. Command ":q"
 	@pre  none
-	@post  Depends on where it is called.
-	@return  returns a 'q'.
+	@post  Exits program without saving list.
 	*/
-	char exitWithoutSaving();
+	void exitWithoutSaving();
 
 };
