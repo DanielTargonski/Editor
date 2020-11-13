@@ -1,4 +1,4 @@
-/** Implementation file for the "Editor" class.
+﻿/** Implementation file for the "Editor" class.
 @file Editor.cpp
 */
 
@@ -13,36 +13,58 @@ void placeCursorAt(Point coordinate) {
 		coord);
 } // end placeCursorAt
 
+//void Editor::displayLines()
+//{
+//	int position;
+//	for (position = 1; position <= lines.getLength(); position++)
+//		cout << lines.getEntry(position) << "\n";
+//
+//	placeCursorAt(uPos);
+//} // end displayLines
+
+template<typename TYPE>
+int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
+{
+	int index;
+	if (first > last)
+		index = -1; // target not in original array
+	else
+	{
+		// If target is in anArray, anArray[first] <= target <= anArray[last]
+		int mid = first + (last - first) / 2;
+		if (target == anArray[mid])
+			index = mid; // target found at anArray[mid]
+		else if (target < anArray[mid])
+			// Point X
+			index = binarySearch(anArray, first, mid - 1, target);
+		else
+			// Point Y
+			index = binarySearch(anArray, mid + 1, last, target);
+	}  // end if
+
+	return index;
+}  // end binarySearch
+
 void Editor::displayLines()
 {
 	int position;
-	for (position = 1; position <= lines.getLength(); position++)
-		cout << lines.getEntry(position) << "\n";
+	string nextLine, nextWord;
 
+	for (position = 1; position <= lines.getLength(); position++)
+	{
+		nextLine = lines.getEntry(position);
+		istringstream iss(nextLine);
+
+		while (iss >> nextWord)
+		{
+			//using the binary search, check whether this a keyword (if yes - color blue)
+			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
+				colorText(1);
+		}
+		cout << lines.getEntry(position) << "\n";
+	}
 	placeCursorAt(uPos);
 } // end displayLines
-
-// WIP
-//void Editor::displayLines2()
-//{
-//	int position;
-//	string nextLine, nextWord;
-//
-//	for (position = 1; position <= lines.getLength(); position++)
-//	{
-//		nextLine = lines.getEntry(position);
-//		istringstream iss(nextLine);
-//
-//		while (iss >> nextWord)
-//		{
-//			//using the binary search, check whether this a keyword (if yes - color blue)
-//			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-//				colorText(1);
-//		}
-//		cout << lines.getEntry(position) << "\n";
-//	}
-//	placeCursorAt(uPos);
-//} // end displayLines
 
 Editor::Editor()
 {
@@ -133,8 +155,8 @@ void Editor::moveLeft()
 } // end moveLeft()
 
 void Editor::moveRight()
-{	
-	if (insert_mode) 
+{
+	if (insert_mode)
 	{
 		if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length()
 			&& lines.getEntry(uPos.getY() + 1).length() > 0)
@@ -145,7 +167,7 @@ void Editor::moveRight()
 	}
 	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1 
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -330,7 +352,7 @@ void Editor::InsertMode()
 	}
 }
 
-void Editor::colorText(int value) 
+void Editor::colorText(int value)
 {
 	COORD coord;
 
@@ -339,7 +361,6 @@ void Editor::colorText(int value)
 	FlushConsoleInputBuffer(hConsole);
 
 	SetConsoleTextAttribute(hConsole, value + 240);
-
 }
 
 void Editor::exitWithoutSaving()

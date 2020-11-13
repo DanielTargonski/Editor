@@ -140,7 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="binarySearch.cpp" />
     <ClCompile Include="CommandPlus.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="main.cpp" />
@@ -148,7 +147,6 @@
     <ClCompile Include="PrecondViolatedExcep.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinarySearch.h" />
     <ClInclude Include="CommandPlus.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="LinkedList.h" />

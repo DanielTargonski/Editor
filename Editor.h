@@ -22,7 +22,6 @@ u: Undo last deletion.
 #include<Windows.h>
 #include"CommandPlus.h"
 #include"LinkedStack.h"
-#include"BinarySearch.h"
 #include<sstream>
 
 using namespace std;
@@ -59,10 +58,10 @@ public:
 	/** displays everything in lines
 	 @Pre  The list must not be empty.
 	 @Post  The list is output to the console. */
-	void displayLines();
+	 //void displayLines();
 
-	//WIP
-	void displayLines2();
+	 //WIP
+	void displayLines();
 
 	/** Moves cursor down. Command 'j'
 	@pre  There must be text below current location of cursor.
@@ -119,7 +118,7 @@ public:
 
 	/** Moves cursor to end of console with command ":,"
 	@pre  none.
-	@post  (x,y) coords are set to match the last char at the 
+	@post  (x,y) coords are set to match the last char at the
 	bottom of the list location.
 	*/
 	void moveToEndOfConsole();
@@ -133,4 +132,19 @@ public:
 	/** Makes empty space under the last line.
 	*/
 	void createSpace();
+
+	/** Searches the array anArray[first] through anArray[last]
+	for a given value by using a binary search.
+ @pre  0 <= first, last <= SIZE - 1, where SIZE is the
+	maximum size of the array, and anArray[first] <=
+	anArray[first + 1] <= ... <= anArray[last].
+ @post  anArray is unchanged and either anArray[index] contains
+	the given value or index == -1.
+ @param anArray  The array to search.
+ @param first  The low index to start searching from.
+ @param last  The high index to stop searching at.
+ @param target  The search key.
+ @return  Either index, such that anArray[index] == target, or -1.*/
+	template<typename TYPE>
+	int binarySearch(TYPE anArray[], int first, int last, TYPE target);
 };

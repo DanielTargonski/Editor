@@ -30,9 +30,6 @@
     <ClCompile Include="CommandPlus.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="binarySearch.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedList.h">
@@ -60,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LinkedStack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BinarySearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
