@@ -414,6 +414,7 @@ void Editor::run()
 				moveToEndOfConsole();
 			else if (cmd.getCommand() == 'q')
 				exitWithoutSaving();
+			count = 0;
 			break;
 		default:
 			count = 0;
