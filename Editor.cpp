@@ -53,8 +53,6 @@ Editor::Editor(string fileName, const string _keyWords[], int size)
 	ifstream inFile(fileName);
 	string temp;
 	int lineCounter = 1;
-	// Copies the keyWords from passed array into private member keyWords[].
-	copy(_keyWords[0],_keyWords[size], keyWords[0]);
 
 	//make sure file opened correctly
 	try
@@ -124,9 +122,19 @@ void Editor::moveLeft()
 } // end moveLeft()
 
 void Editor::moveRight()
-{	// Checks if current 'x' position is less than the length of the current
+{	
+	if (insert_mode) 
+	{
+		if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length()
+			&& lines.getEntry(uPos.getY() + 1).length() > 0)
+		{
+			uPos.setX(uPos.getX() + 1);
+			placeCursorAt(uPos);
+		}
+	}
+	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1 
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -236,15 +244,7 @@ void Editor::InsertMode()
 {
 	CommandPlus tmpCommand;
 	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
-
 	undoSt.push(tmpCommand);
-
-	// Set and move cursor 1+
-	//if (uPos.getX() > 0)
-	//{
-	//	uPos.setX(uPos.getX() + 1);
-	//	placeCursorAt(uPos);
-	//}
 
 	char userInput{};
 
@@ -255,25 +255,55 @@ void Editor::InsertMode()
 
 		if (userInput == ESCAPE)
 		{
-			// Reset cursor
-			uPos.setX(uPos.getX() - 1);
-			placeCursorAt(uPos);
+			// Reset cursor if past length
+			if (uPos.getX() > lines.getEntry(uPos.getY() + 1).length() - 1)
+			{
+				uPos.setX(uPos.getX() - 1);
+				placeCursorAt(uPos);
+			}
+			insert_mode = false;
 			break;
 		}
 
 		// WIP
-		// TO DO - FIX CURSOR LOCATION
-		// IF ENTER ON STRING, SPLIT PROPERLY
 		if (userInput == ENTER)
 		{
-			lines.insert(uPos.getY() + 2, "");
+			string first_half{ lines.getEntry(uPos.getY() + 1).substr(0, uPos.getX()) };
+			string second_half{ lines.getEntry(uPos.getY() + 1).substr(uPos.getX()) };
+
+			// Replace the node cursor is at with new string
+			lines.replace(uPos.getY() + 1, first_half);
+
+			// Insert new node next to cursor node with new string
+			lines.insert(uPos.getY() + 2, second_half);
+
+			// New coordinate
 			uPos.setX(0);
 			uPos.setY(uPos.getY() + 1);
-			placeCursorAt(uPos);
+
 			system("CLS"); // clears screen
 			displayLines();
 			continue;
 		}
+
+		// WIP
+		// TRYING TO USE ARROW KEYS ON INSERT MODE
+
+		//switch (userInput)
+		//{
+		//case -32: // down arrow key
+		//	moveDown();
+		//	continue;
+		//case 72: // up arrow key
+		//	moveUp();
+		//	break;
+		//case 77: // right arrow key
+		//	moveRight();
+		//	break;
+		//case 75: // left arrow key
+		//	moveLeft();
+		//	break;
+		//}
 
 		// Replace new node with modified string
 		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
@@ -286,7 +316,6 @@ void Editor::InsertMode()
 
 		// Fix and move to new position
 		uPos.setX(uPos.getX() + 1);
-		placeCursorAt(uPos);
 	}
 }
 
@@ -321,12 +350,12 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // up arrow key
+		case 80: // down arrow key
 			moveDown();
 			count = 0;
 			break;
 		case 'k':
-		case 72: // down arrow key
+		case 72: // up arrow key
 			moveUp();
 			count = 0;
 			break;
@@ -356,6 +385,7 @@ void Editor::run()
 			count = 0;
 			break;
 		case 'i':
+			insert_mode = true;
 			InsertMode();
 			count = 0;
 			break;

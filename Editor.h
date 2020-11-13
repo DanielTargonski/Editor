@@ -41,6 +41,7 @@ private:
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
 	const int ENTER{ 13 };
+	bool insert_mode{ false };
 
 public:
 
