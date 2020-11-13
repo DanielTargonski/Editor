@@ -130,4 +130,7 @@ public:
 	*/
 	void exitWithoutSaving();
 
+	/** Makes empty space under the last line.
+	*/
+	void createSpace();
 };

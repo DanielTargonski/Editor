@@ -350,6 +350,12 @@ void Editor::exitWithoutSaving()
 	exit(1);
 }
 
+void Editor::createSpace()
+{
+	for (int i = 0; i < lines.getLength() / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+}
+
 void Editor::run()
 {
 	displayLines();
@@ -422,7 +428,5 @@ void Editor::run()
 
 	// Creates space so that the text doesn't get obstructed by the
 	// closing of terminal message.
-	lengthOfLines = lines.getLength();
-	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
-		cout << "\n\n\n\n\n";
+	createSpace();
 } // end run
