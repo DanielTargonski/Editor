@@ -1,6 +1,5 @@
-int main()
+int main ()
 {
-testing keywords hightlighting.
 for Asm auto
 public
 register
