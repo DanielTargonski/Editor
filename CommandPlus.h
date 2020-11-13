@@ -30,6 +30,13 @@ public:
 	@post  Private member command char is set. */
 	void setCommand();
 
+	/** Sets the command to the passed paramter.
+	@param  _command char, sets private member command.
+	@pre  None.
+	@post  Command char is set.
+	*/
+	void setCommand(const char _command);
+
 	/** Sets the string "deletedText"
 	@pre  None.
 	@post  Sets the private member "value".

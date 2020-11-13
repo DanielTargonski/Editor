@@ -28,7 +28,7 @@ int findIndexOfLargest(const Type theArray[], int size);
 template <typename Type>
 void selectionSort(Type theArray[], int n);
 
-void outputToFile(string arr[], int size, ostream& outData);
+void outputToFile(const string arr[], int size, ostream& outData);
 
 void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
 
@@ -36,12 +36,9 @@ int main(int argc, const char* argv[])
 {
 	string keyWords[60];
 	ifstream inKeywords("keywords.txt");
-	ofstream outKeywords("sortedKeywords.txt");
 	int numberOfCmdLineArgs = 0;
 
 	makeKeywordArray(keyWords, 60, inKeywords);
-	selectionSort(keyWords, 60);
-	outputToFile(keyWords, 60, outKeywords);
 
 	// argv[] reads in from the command line.
 	if (argc < 1)
@@ -74,7 +71,7 @@ int main(int argc, const char* argv[])
 	miniVi.run();
 }
 
-void outputToFile(string arr[], int size, ostream& outData)
+void outputToFile(const string arr[], int size, ostream& outData)
 {
 	for (int i = 0; i < size; i++)
 	{

@@ -22,9 +22,9 @@ void Editor::displayLines()
 	placeCursorAt(uPos);
 } // end displayLines
 
+// WIP
 //void Editor::displayLines2()
 //{
-//
 //	int position;
 //	string nextLine, nextWord;
 //
@@ -37,7 +37,7 @@ void Editor::displayLines()
 //		{
 //			//using the binary search, check whether this a keyword (if yes - color blue)
 //			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-//				colorText(0);
+//				colorText(1);
 //		}
 //		cout << lines.getEntry(position) << "\n";
 //	}
@@ -77,6 +77,17 @@ Editor::Editor(string fileName, const string _keyWords[], int size)
 		lineCounter++;
 	} // end while
 } // end Editor
+
+void Editor::moveToEndOfConsole()
+{
+	uPos.setY(lines.getLength() - 1);
+	if (lines.getEntry(uPos.getY() + 1).length() - 1 >= 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
+
+	placeCursorAt(uPos);
+}
 
 void Editor::moveDown()
 {
@@ -331,6 +342,11 @@ void Editor::colorText(int value)
 
 }
 
+char Editor::exitWithoutSaving()
+{
+	return 'q';
+}
+
 void Editor::run()
 {
 	ifstream inKeywords("keywords.txt");
@@ -388,6 +404,14 @@ void Editor::run()
 			insert_mode = true;
 			InsertMode();
 			count = 0;
+			break;
+		case ':':
+			cmd.setCommand();
+			if (cmd.getCommand() == ',')
+				moveToEndOfConsole();
+			else if (cmd.getCommand() == 'q')
+				cmd.setCommand(exitWithoutSaving());
+
 			break;
 		default:
 			count = 0;
