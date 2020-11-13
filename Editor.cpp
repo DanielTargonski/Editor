@@ -350,20 +350,24 @@ void Editor::exitWithoutSaving()
 	exit(1);
 }
 
+void Editor::createSpace()
+{
+	for (int i = 0; i < lines.getLength() / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+}
+
 void Editor::run()
 {
-	ifstream inKeywords("keywords.txt");
-	ofstream outKeywords("sortedKeywords.txt");
-
 	displayLines();
 
+	bool run{ true };
 	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
 
-	// Keeps program running while users does not enter 'q' or ESC
+	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
-	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
+	while (run)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
@@ -424,7 +428,5 @@ void Editor::run()
 
 	// Creates space so that the text doesn't get obstructed by the
 	// closing of terminal message.
-	lengthOfLines = lines.getLength();
-	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
-		cout << "\n\n\n\n\n";
+	createSpace();
 } // end run
