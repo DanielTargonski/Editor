@@ -1,5 +1,8 @@
+notAkeyWord
+Gondor
 int main ()
 {
+quantum mechanics
 for Asm auto
 public
 register
