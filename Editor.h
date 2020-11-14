@@ -36,6 +36,7 @@ private:
 	Point uPos;
 	// Holds key words to be highlighted.
 	string keyWords[60];
+	string fileName;
 
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
@@ -53,7 +54,7 @@ public:
 	@param  size int, The size of the _keyWords[] array parameter.
 	@Pre  The passed string must be the name of a file and in the directory
 	@Post  A list is created from the file that was passed as a string parameter */
-	Editor(string fileName, const string _keyWords[], int size);
+	Editor(string _fileName, const string _keyWords[], int size);
 
 	/** displays everything in lines
 	 @Pre  The list must not be empty.
@@ -147,4 +148,9 @@ public:
  @return  Either index, such that anArray[index] == target, or -1.*/
 	template<typename TYPE>
 	int binarySearch(TYPE anArray[], int first, int last, TYPE target);
+
+	/** Saves the file to the current open file.
+	@pre  Must be an open file.
+	@post  File is overwritten with current state. */
+	void saveFile();
 };

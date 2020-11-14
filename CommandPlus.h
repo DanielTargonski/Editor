@@ -92,6 +92,4 @@ public:
 	@post  None.
 	@return  Returns bool value of isString. */
 	bool getBoolIsString();
-
-
 };
