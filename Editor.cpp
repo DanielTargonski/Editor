@@ -48,7 +48,7 @@ int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 void Editor::displayLines()
 {
 	int position;
-	string nextLine, nextWord;
+	string nextLine, nextWord, line{};
 
 	for (position = 1; position <= lines.getLength(); position++)
 	{
@@ -59,7 +59,11 @@ void Editor::displayLines()
 		{
 			//using the binary search, check whether this a keyword (if yes - color blue)
 			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
+			{
 				colorText(1);
+			}
+			else
+				colorText(0);
 		}
 		cout << lines.getEntry(position) << "\n";
 	}
