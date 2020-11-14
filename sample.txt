@@ -1,16 +1,19 @@
-notAkeyWord
-Gondor
-int main ()
-{
-quantum mechanics
-for Asm auto
-public
-register
-reinterpret_cast
-return
+ main ()  
+{ 
+notkeyword   awer
+for  Asm auto 
+pub lic  es
+register   rstghsrt
+reinterpret_cast   aha
+return       awer
+notakeyword   spaces   words
 short
+int
+main
+int main
 signed
 sizeof
 static
 static_cast
 }
+

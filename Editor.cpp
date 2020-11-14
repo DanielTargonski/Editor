@@ -54,14 +54,12 @@ void Editor::displayLines()
 	{
 		nextLine = lines.getEntry(position);
 		istringstream iss(nextLine);
-
+		line = nextLine;
 		while (iss >> nextWord)
 		{
 			//using the binary search, check whether this a keyword (if yes - color blue)
 			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-			{
-				colorText(1);
-			}
+				colorText(1); 
 			else
 				colorText(0);
 		}
@@ -70,14 +68,23 @@ void Editor::displayLines()
 	placeCursorAt(uPos);
 } // end displayLines
 
+void Editor::saveFile()
+{
+	ofstream outLines(fileName);
+	int position;
+	for (position = 1; position <= lines.getLength(); position++)
+	outLines << lines.getEntry(position) << "\n";
+}
+
 Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string fileName, const string _keyWords[], int size)
+Editor::Editor(string _fileName, const string _keyWords[], int size)
 {
-	ifstream inFile(fileName);
+	ifstream inFile(_fileName);
 	string temp;
+	fileName = _fileName;
 	int lineCounter = 1;
 	for (int i = 0; i < size; i++)
 		keyWords[i] = _keyWords[i];
@@ -447,6 +454,8 @@ void Editor::run()
 				moveToEndOfConsole();
 			else if (cmd.getCommand() == 'q')
 				exitWithoutSaving();
+			else if (cmd.getCommand() == 'w')
+				saveFile();
 			count = 0;
 			break;
 		default:

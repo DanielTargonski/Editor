@@ -79,8 +79,8 @@ void outputToFile(const string arr[], int size, ostream& outData)
 	}
 }
 
-template <class ItemType>
-int findIndexOfLargest(const ItemType theArray[], int size)
+template <typename TYPE>
+int findIndexOfLargest(const TYPE theArray[], int size)
 {
 	int indexSoFar = 0; // Index of largest entry found so far
 	for (int currentIndex = 1; currentIndex < size; currentIndex++)
