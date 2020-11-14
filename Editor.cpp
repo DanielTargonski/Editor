@@ -59,7 +59,7 @@ void Editor::displayLines()
 		{
 			//using the binary search, check whether this a keyword (if yes - color blue)
 			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-				colorText(1); 
+				colorText(1);
 			else
 				colorText(0);
 		}
@@ -73,7 +73,7 @@ void Editor::saveFile()
 	ofstream outLines(fileName);
 	int position;
 	for (position = 1; position <= lines.getLength(); position++)
-	outLines << lines.getEntry(position) << "\n";
+		outLines << lines.getEntry(position) << "\n";
 }
 
 Editor::Editor()
