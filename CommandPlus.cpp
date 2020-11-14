@@ -49,3 +49,23 @@ int CommandPlus::getXLocation()
 {
 	return location.getX();
 }
+
+void CommandPlus::setTrueIsChar()
+{
+	isChar = true;
+}
+
+bool CommandPlus::getBoolIsChar()
+{
+	return isChar;
+}
+
+void CommandPlus::setTrueIsString()
+{
+	isString = true;
+}
+
+bool CommandPlus::getBoolIsString()
+{
+	return isString;
+}

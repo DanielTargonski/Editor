@@ -75,6 +75,8 @@ Editor::Editor(string fileName, const string _keyWords[], int size)
 	ifstream inFile(fileName);
 	string temp;
 	int lineCounter = 1;
+	for (int i = 0; i < size; i++)
+		keyWords[i] = _keyWords[i];
 
 	//make sure file opened correctly
 	try
@@ -180,6 +182,7 @@ void Editor::deleteChar()
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		CommandPlus cmd;
+		cmd.setTrueIsChar(); // sets isChar to true so we know how to undo this.
 		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
@@ -200,6 +203,7 @@ void Editor::deleteLine()
 {
 	bool removed = false;
 	CommandPlus cmd;
+	cmd.setTrueIsString(); // sets isString to true.
 	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
@@ -244,7 +248,7 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getValue().length() > 1 || tempCmd.getValue() == "")
+		if (tempCmd.getBoolIsString() == true)
 			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
 
 		// Else, we are restoring a character, which requires the string
