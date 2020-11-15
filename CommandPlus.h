@@ -42,7 +42,7 @@ public:
 	@post  Sets the private member "value".
 	@param _delText is a string that will set the private
 	"deletedText" member. */
-	void setValue(const string& _value);
+	void setValue(const string _value);
 
 	/** Getter method for private member "deletedText".
 	@pre There must be something stored in the deletedText string.
