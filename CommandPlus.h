@@ -34,8 +34,7 @@ public:
 	/** Sets the command to the passed paramter.
 	@param  _command char, sets private member command.
 	@pre  None.
-	@post  Command char is set.
-	*/
+	@post  Command char is set. */
 	void setCommand(const char _command);
 
 	/** Sets the string "deletedText"
@@ -48,8 +47,7 @@ public:
 	/** Getter method for private member "deletedText".
 	@pre There must be something stored in the deletedText string.
 	@post None.
-	@return Returns the string stored in the private member "deletedText".
-	*/
+	@return Returns the string stored in the private member "deletedText". */
 	string getValue();
 
 	/** Saves the (x,y) pair into the private "location" Point object.

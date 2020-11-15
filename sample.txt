@@ -1,7 +1,7 @@
- main ()  
+int main ()  
 { 
-notkeyword   awer
-for  Asm auto 
+notkeyword  return auto no
+for  Asm auto
 pub lic  es
 register   rstghsrt
 reinterpret_cast   aha
@@ -15,5 +15,5 @@ signed
 sizeof
 static
 static_cast
+static nonkey
 }
-

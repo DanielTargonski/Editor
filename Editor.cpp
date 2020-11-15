@@ -13,6 +13,7 @@ void placeCursorAt(Point coordinate) {
 		coord);
 } // end placeCursorAt
 
+//old displayLines()
 //void Editor::displayLines()
 //{
 //	int position;
@@ -53,17 +54,31 @@ void Editor::displayLines()
 	for (position = 1; position <= lines.getLength(); position++)
 	{
 		nextLine = lines.getEntry(position);
-		istringstream iss(nextLine);
-		line = nextLine;
-		while (iss >> nextWord)
-		{
-			//using the binary search, check whether this a keyword (if yes - color blue)
-			if (binarySearch(keyWords, 0, 59, nextWord) != -1)
-				colorText(1);
-			else
+
+		int i = 0;
+		while (i < nextLine.length()) {
+			string word;
+			// isolate a word at a time (can contain underscores)
+			if (isalpha(nextLine[i])) {
+				while (isalpha(nextLine[i]) || nextLine[i] == '_') {
+					word += nextLine[i];
+					i++;
+				}
+				if (binarySearch(keyWords, 0, keywordArrSize, word) != -1)
+					colorText(1);
+				else
+					colorText(0);
+				cout << word;
+			}
+
+			else {
 				colorText(0);
+				cout << nextLine[i];
+				i++;
+			}
 		}
-		cout << lines.getEntry(position) << "\n";
+
+		cout << endl;
 	}
 	placeCursorAt(uPos);
 } // end displayLines
