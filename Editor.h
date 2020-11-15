@@ -36,6 +36,7 @@ private:
 	Point uPos;
 	// Holds key words to be highlighted.
 	string keyWords[60];
+	int keywordArrSize = sizeof(keyWords) / sizeof(keyWords[0]);
 	string fileName;
 
 	const char QUIT = 'q';
@@ -61,7 +62,9 @@ public:
 	 @Post  The list is output to the console. */
 	 //void displayLines();
 
-	 //WIP
+	/** displays everything in lines and colors keywords.
+	 @Pre  The list must not be empty.
+	 @Post  The list is output to the console. */
 	void displayLines();
 
 	/** Moves cursor down. Command 'j'
@@ -131,6 +134,8 @@ public:
 	void exitWithoutSaving();
 
 	/** Makes empty space under the last line.
+	@pre  None.
+	@post  Space is created under last line of list.
 	*/
 	void createSpace();
 
