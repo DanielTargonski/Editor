@@ -95,15 +95,22 @@ Editor::Editor(string fileName, string keywordFile)
 	} // end while
 
 	// Text file for highlighting
-	ifstream _file(keywordFile);
+	fstream _file;
 	string key_words{};
 	vector<string> arr;
+	unsigned int i{0};
+	_file.open(keywordFile);
 	while (!_file.eof())
 	{
 		_file >> key_words;
 		arr.push_back(key_words);
 	}
 	sort(arr.begin(), arr.end());
+
+	for (const auto i : arr)
+		_file << i;
+
+	_file.close();
 } // end Editor
 
 void Editor::moveDown()
