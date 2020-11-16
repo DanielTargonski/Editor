@@ -480,12 +480,6 @@ void Editor::run()
 			displayLines();
 			count = 0;
 			break;
-
-			//Point semi(1, lines.getLength() + 3);
-			
-			//	saveFile();
-			//count = 0;
-			//break;
 		default:
 			count = 0;
 			break;
