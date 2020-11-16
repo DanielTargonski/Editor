@@ -10,6 +10,9 @@ q: Exits the editor.
 x: Delete character.
 dd: Delete's line the cursor position is on.
 u: Undo last deletion.
+:, : Puts the cursor at the last char on the last line.
+:w : Saves the changes to the file.
+:q : Exits the program without saving.
 
 @file Editor.h
 */
