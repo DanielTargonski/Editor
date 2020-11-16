@@ -48,6 +48,7 @@ int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 
 void Editor::displayLines()
 {
+	system("CLS");
 	int position;
 	string nextLine, nextWord, line{};
 
@@ -420,6 +421,7 @@ void Editor::run()
 	// Allows user to enter certain commands to move cursor around txt file
 	while (run)
 	{
+		Point semi(1, lines.getLength() + 3);
 		cmd.setCommand();
 		switch (cmd.getCommand())
 		{
@@ -464,13 +466,18 @@ void Editor::run()
 			count = 0;
 			break;
 		case ':':
+			placeCursorAt(semi);
+			cout << ":";
 			cmd.setCommand();
+			cout << cmd.getCommand();
 			if (cmd.getCommand() == ',')
 				moveToEndOfConsole();
 			else if (cmd.getCommand() == 'q')
 				exitWithoutSaving();
 			else if (cmd.getCommand() == 'w')
 				saveFile();
+
+			displayLines();
 			count = 0;
 			break;
 		default:
