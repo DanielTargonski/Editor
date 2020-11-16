@@ -158,4 +158,6 @@ public:
 	@pre  Must be an open file.
 	@post  File is overwritten with current state. */
 	void saveFile();
+
+
 };
