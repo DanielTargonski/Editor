@@ -1,11 +1,10 @@
-/** Implementation file for the "Editor" class.
+﻿/** Implementation file for the "Editor" class.
 @file Editor.cpp
 */
 
 #include"Editor.h"
 
-void placeCursorAt(Point coordinate) 
-{
+void placeCursorAt(Point coordinate) {
 	COORD coord;
 	coord.X = coordinate.getX();
 	coord.Y = coordinate.getY();
@@ -14,32 +13,96 @@ void placeCursorAt(Point coordinate)
 		coord);
 } // end placeCursorAt
 
-void colorText(int value) 
+//old displayLines()
+//void Editor::displayLines()
+//{
+//	int position;
+//	for (position = 1; position <= lines.getLength(); position++)
+//		cout << lines.getEntry(position) << "\n";
+//
+//	placeCursorAt(uPos);
+//} // end displayLines
+
+template<typename TYPE>
+int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 {
-	COORD coord;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	FlushConsoleInputBuffer(hConsole);
-	SetConsoleTextAttribute(hConsole, value + 240);
-}
+	int index;
+	if (first > last)
+		index = -1; // target not in original array
+	else
+	{
+		// If target is in anArray, anArray[first] <= target <= anArray[last]
+		int mid = first + (last - first) / 2;
+		if (target == anArray[mid])
+			index = mid; // target found at anArray[mid]
+		else if (target < anArray[mid])
+			// Point X
+			index = binarySearch(anArray, first, mid - 1, target);
+		else
+			// Point Y
+			index = binarySearch(anArray, mid + 1, last, target);
+	}  // end if
+
+	return index;
+}  // end binarySearch
 
 void Editor::displayLines()
 {
 	int position;
-	for (position = 1; position <= lines.getLength(); position++)
-		cout << lines.getEntry(position) << "\n";
+	string nextLine, nextWord, line{};
 
+	for (position = 1; position <= lines.getLength(); position++)
+	{
+		nextLine = lines.getEntry(position);
+
+		int i = 0;
+		while (i < nextLine.length()) {
+			string word;
+			// isolate a word at a time (can contain underscores)
+			if (isalpha(nextLine[i])) {
+				while (isalpha(nextLine[i]) || nextLine[i] == '_') {
+					word += nextLine[i];
+					i++;
+				}
+				if (binarySearch(keyWords, 0, keywordArrSize, word) != -1)
+					colorText(1);
+				else
+					colorText(0);
+				cout << word;
+			}
+
+			else {
+				colorText(0);
+				cout << nextLine[i];
+				i++;
+			}
+		}
+
+		cout << endl;
+	}
 	placeCursorAt(uPos);
 } // end displayLines
+
+void Editor::saveFile()
+{
+	ofstream outLines(fileName);
+	int position;
+	for (position = 1; position <= lines.getLength(); position++)
+		outLines << lines.getEntry(position) << "\n";
+}
 
 Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string fileName)
+Editor::Editor(string _fileName, const string _keyWords[], int size)
 {
-	ifstream inFile(fileName);
+	ifstream inFile(_fileName);
 	string temp;
+	fileName = _fileName;
 	int lineCounter = 1;
+	for (int i = 0; i < size; i++)
+		keyWords[i] = _keyWords[i];
 
 	//make sure file opened correctly
 	try
@@ -65,53 +128,16 @@ Editor::Editor(string fileName)
 	} // end while
 } // end Editor
 
-Editor::Editor(string fileName, string keywordFile)
+void Editor::moveToEndOfConsole()
 {
-	ifstream inFile(fileName);
-	string temp;
-	int lineCounter = 1;
+	uPos.setY(lines.getLength() - 1);
+	if (lines.getEntry(uPos.getY() + 1).length() - 1 >= 0)
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+	else
+		uPos.setX(0);
 
-	//make sure file opened correctly
-	try
-	{
-		if (inFile.fail())
-			throw invalid_argument("File failed to opened.");
-	}
-	catch (const invalid_argument& invArg)
-	{
-		cout << invArg.what() << endl <<
-			"Please check the file name for accuracy and ensure it's in "
-			<< "the proper directory.\n";
-		exit(1);
-	} // end try-catch
-
-	// Loop reads a line into the "temp" string and
-	// inserts it into the back of the ADT list "lines".
-	while (!inFile.eof())
-	{
-		getline(inFile, temp);
-		lines.insert(lineCounter, temp);
-		lineCounter++;
-	} // end while
-
-	// Text file for highlighting
-	fstream _file;
-	string key_words{};
-	vector<string> arr;
-	unsigned int i{0};
-	_file.open(keywordFile);
-	while (!_file.eof())
-	{
-		_file >> key_words;
-		arr.push_back(key_words);
-	}
-	sort(arr.begin(), arr.end());
-
-	for (const auto i : arr)
-		_file << i;
-
-	_file.close();
-} // end Editor
+	placeCursorAt(uPos);
+}
 
 void Editor::moveDown()
 {
@@ -157,8 +183,8 @@ void Editor::moveLeft()
 } // end moveLeft()
 
 void Editor::moveRight()
-{	
-	if (insert_mode) 
+{
+	if (insert_mode)
 	{
 		if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length()
 			&& lines.getEntry(uPos.getY() + 1).length() > 0)
@@ -169,7 +195,7 @@ void Editor::moveRight()
 	}
 	// Checks if current 'x' position is less than the length of the current
 	// line so as not to go past last character in the string.
-	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1 
+	if (uPos.getX() < lines.getEntry(uPos.getY() + 1).length() - 1
 		&& lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		uPos.setX(uPos.getX() + 1);
@@ -182,6 +208,7 @@ void Editor::deleteChar()
 	if (lines.getEntry(uPos.getY() + 1).length() > 0)
 	{
 		CommandPlus cmd;
+		cmd.setTrueIsChar(); // sets isChar to true so we know how to undo this.
 		cmd.setValue(lines.getEntry(uPos.getY() + 1).substr(uPos.getX(), 1));
 		cmd.setLocation(uPos);
 		undoSt.push(cmd);
@@ -190,6 +217,7 @@ void Editor::deleteChar()
 	// replace the string and displaylines again
 	lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).erase(uPos.getX(), 1));
 
+	// Update x position.
 	if (uPos.getX() > 0)
 		uPos.setX(uPos.getX() - 1);
 
@@ -201,6 +229,7 @@ void Editor::deleteLine()
 {
 	bool removed = false;
 	CommandPlus cmd;
+	cmd.setTrueIsString(); // sets isString to true.
 	cmd.setValue(lines.getEntry(uPos.getY() + 1));
 	cmd.setLocation(uPos);
 	undoSt.push(cmd);
@@ -245,7 +274,7 @@ void Editor::undo()
 		undoSt.pop();
 		// If we are undoing a string deletion then we insert it back
 		// to where it was deleted and display the lines again.
-		if (tempCmd.getValue().length() > 1 || tempCmd.getValue() == "")
+		if (tempCmd.getBoolIsString() == true)
 			lines.insert(tempCmd.getYLocation() + 1, tempCmd.getValue());
 
 		// Else, we are restoring a character, which requires the string
@@ -277,13 +306,15 @@ void Editor::undo()
 void Editor::InsertMode()
 {
 	CommandPlus tmpCommand;
+	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+	undoSt.push(tmpCommand);
 
-	int userInput{};
+	char userInput{};
 
 	while (true)
 	{
 		// Get user input
-		userInput = _getwch();
+		userInput = _getch();
 
 		if (userInput == ESCAPE)
 		{
@@ -309,10 +340,6 @@ void Editor::InsertMode()
 			// Insert new node next to cursor node with new string
 			lines.insert(uPos.getY() + 2, second_half);
 
-			// When undoing - it should undo the new node that was inserted
-			tmpCommand.setValue(lines.getEntry(uPos.getY() + 2));
-			undoSt.push(tmpCommand);
-
 			// New coordinate
 			uPos.setX(0);
 			uPos.setY(uPos.getY() + 1);
@@ -322,20 +349,14 @@ void Editor::InsertMode()
 			continue;
 		}
 
-		/*if (userInput == BACKSPACE)
-		{
-			uPos.setX(uPos.getX() - 1);
-			placeCursorAt(uPos);
-		}*/
-
 		// WIP
 		// TRYING TO USE ARROW KEYS ON INSERT MODE
 
 		//switch (userInput)
 		//{
-		//case 80: // down arrow key
+		//case -32: // down arrow key
 		//	moveDown();
-		//	break;
+		//	continue;
 		//case 72: // up arrow key
 		//	moveUp();
 		//	break;
@@ -347,40 +368,63 @@ void Editor::InsertMode()
 		//	break;
 		//}
 
-		// char
-
-		// When undoing it should undo what will be replaces
-		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
-		undoSt.push(tmpCommand);
-
 		// Replace new node with modified string
 		lines.replace(uPos.getY() + 1, lines.getEntry(uPos.getY() + 1).insert(uPos.getX(), 1, userInput));
-		
-		// Fix and move to new position
-		uPos.setX(uPos.getX() + 1);
 
 		system("CLS"); // clears screen
 		displayLines();
+
+		tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
+		undoSt.push(tmpCommand);
+
+		// Fix and move to new position
+		uPos.setX(uPos.getX() + 1);
 	}
+}
+
+void Editor::colorText(int value)
+{
+	COORD coord;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	FlushConsoleInputBuffer(hConsole);
+
+	SetConsoleTextAttribute(hConsole, value + 240);
+}
+
+void Editor::exitWithoutSaving()
+{
+	int lengthOfLines = lines.getLength();
+	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
+	exit(1);
+}
+
+void Editor::createSpace()
+{
+	for (int i = 0; i < lines.getLength() / 5 + 1; i++)
+		cout << "\n\n\n\n\n";
 }
 
 void Editor::run()
 {
 	displayLines();
 
+	bool run{ true };
 	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
 
-	// Keeps program running while users does not enter 'q' or ESC
+	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
-	while (cmd.getCommand() != QUIT && cmd.getCommand() != ESCAPE)
+	while (run)
 	{
 		cmd.setCommand();
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: //VK_DOWN: // down arrow key
+		case 80: // down arrow key
 			moveDown();
 			count = 0;
 			break;
@@ -419,6 +463,16 @@ void Editor::run()
 			InsertMode();
 			count = 0;
 			break;
+		case ':':
+			cmd.setCommand();
+			if (cmd.getCommand() == ',')
+				moveToEndOfConsole();
+			else if (cmd.getCommand() == 'q')
+				exitWithoutSaving();
+			else if (cmd.getCommand() == 'w')
+				saveFile();
+			count = 0;
+			break;
 		default:
 			count = 0;
 			break;
@@ -427,7 +481,5 @@ void Editor::run()
 
 	// Creates space so that the text doesn't get obstructed by the
 	// closing of terminal message.
-	lengthOfLines = lines.getLength();
-	for (int i = 0; i < lengthOfLines / 5 + 1; i++)
-		cout << "\n\n\n\n\n";
+	createSpace();
 } // end run

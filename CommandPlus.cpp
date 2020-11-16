@@ -20,6 +20,11 @@ void CommandPlus::setCommand()
 	command = _getwch();
 }
 
+void CommandPlus::setCommand(const char _command)
+{
+	command = _command;
+}
+
 void CommandPlus::setValue(const string& _value)
 {
 	value = _value;
@@ -43,4 +48,24 @@ int CommandPlus::getYLocation()
 int CommandPlus::getXLocation()
 {
 	return location.getX();
+}
+
+void CommandPlus::setTrueIsChar()
+{
+	isChar = true;
+}
+
+bool CommandPlus::getBoolIsChar()
+{
+	return isChar;
+}
+
+void CommandPlus::setTrueIsString()
+{
+	isString = true;
+}
+
+bool CommandPlus::getBoolIsString()
+{
+	return isString;
 }

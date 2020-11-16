@@ -30,9 +30,6 @@
     <ClCompile Include="CommandPlus.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="binarySearch.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedList.h">
@@ -68,6 +65,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="keywords.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sortedKeywords.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

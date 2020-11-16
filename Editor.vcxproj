@@ -161,6 +161,7 @@
   <ItemGroup>
     <Text Include="keywords.txt" />
     <Text Include="sample.txt" />
+    <Text Include="sortedKeywords.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
