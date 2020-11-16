@@ -133,7 +133,7 @@ void Editor::moveToEndOfConsole()
 {
 	uPos.setY(lines.getLength() - 1);
 	if (lines.getEntry(uPos.getY() + 1).length() - 1 >= 0)
-		uPos.setX(lines.getEntry(uPos.getY() + 1).length() - 1);
+		uPos.setX(lines.getEntry(uPos.getY() + 1).length());
 	else
 		uPos.setX(0);
 
