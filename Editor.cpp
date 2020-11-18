@@ -416,6 +416,10 @@ void Editor::run()
 	int lengthOfLines{};
 	unsigned int count{};
 	CommandPlus cmd;
+	const int upArrowKey = 72;
+	const int downArrowKey = 80;
+	const int rightArrowKey = 77;
+	const int leftArrowKey = 75;
 
 	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
@@ -426,22 +430,22 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // down arrow key
+		case downArrowKey: // down arrow key
 			moveDown();
 			count = 0;
 			break;
 		case 'k':
-		case 72: // up arrow key
+		case upArrowKey: // up arrow key
 			moveUp();
 			count = 0;
 			break;
 		case 'l':
-		case 77: // right arrow key
+		case rightArrowKey: // right arrow key
 			moveRight();
 			count = 0;
 			break;
 		case 'h':
-		case 75: // left arrow key
+		case leftArrowKey: // left arrow key
 			moveLeft();
 			count = 0;
 			break;

@@ -1,18 +1,15 @@
-int main ()  
-{ 
-notkeyword  return auto no
+int main ()
+{}
+notkeyword  retur auto no
 for  Asm auto
 pub lic  es
-register   rstghsrt
 reinterpret_cast   aha
 return       awer
-notakeyword   spaces   words
-short
+notakey   spaces   words
 int
 main
 int main
 signed
-sizeof
 static
 static_cast
 static nonkey
