@@ -421,7 +421,6 @@ void Editor::run()
 	const int rightArrowKey = 77;
 	const int leftArrowKey = 75;
 
-
 	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
 	while (run)
