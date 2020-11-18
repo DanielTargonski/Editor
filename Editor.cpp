@@ -354,16 +354,16 @@ void Editor::InsertMode()
 
 		//switch (userInput)
 		//{
-		//case -32: // down arrow key
+		//case down_arrow: // down arrow key
 		//	moveDown();
 		//	continue;
-		//case 72: // up arrow key
+		//case up_arrow: // up arrow key
 		//	moveUp();
 		//	break;
-		//case 77: // right arrow key
+		//case right_arrow: // right arrow key
 		//	moveRight();
 		//	break;
-		//case 75: // left arrow key
+		//case left_arrow: // left arrow key
 		//	moveLeft();
 		//	break;
 		//}
@@ -416,6 +416,11 @@ void Editor::run()
 	unsigned int count{};
 	CommandPlus cmd;
 
+	const int down_arrow{ 80 };
+	const int up_arrow{ 72 };
+	const int right_arrow{ 77 };
+	const int left_arrow{ 75 };
+
 	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
 	while (run)
@@ -424,22 +429,22 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case 80: // down arrow key
+		case down_arrow: // down arrow key
 			moveDown();
 			count = 0;
 			break;
 		case 'k':
-		case 72: // up arrow key
+		case up_arrow: // up arrow key
 			moveUp();
 			count = 0;
 			break;
 		case 'l':
-		case 77: // right arrow key
+		case right_arrow: // right arrow key
 			moveRight();
 			count = 0;
 			break;
 		case 'h':
-		case 75: // left arrow key
+		case left_arrow: // left arrow key
 			moveLeft();
 			count = 0;
 			break;
