@@ -86,7 +86,7 @@ void Editor::displayLines()
 
 void Editor::saveFile()
 {
-	ofstream outLines(fileName);
+	ofstream outLines(textFile);
 	int position;
 	for (position = 1; position <= lines.getLength(); position++)
 		outLines << lines.getEntry(position) << "\n";
@@ -96,11 +96,11 @@ Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string _fileName, const string _keyWords[], int size)
+Editor::Editor(string _textFileName, const string _keyWords[], int size)
 {
-	ifstream inFile(_fileName);
+	ifstream inFile(_textFileName);
 	string temp;
-	fileName = _fileName;
+	textFile = _textFileName;
 	int lineCounter = 1;
 	for (int i = 0; i < size; i++)
 		keyWords[i] = _keyWords[i];

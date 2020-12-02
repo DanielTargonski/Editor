@@ -34,11 +34,6 @@ void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
 
 int main(int argc, const char* argv[])
 {
-	unique_ptr<LinkedList<string>> uniquePtr(new LinkedList<string>());
-	uniquePtr->insert(1, "1");
-
-
-
 	string keyWords[60];
 	ifstream inKeywords("keywords.txt");
 	int numberOfCmdLineArgs = 0;
