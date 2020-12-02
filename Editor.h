@@ -58,7 +58,9 @@ public:
 	@param  size int, The size of the _keyWords[] array parameter.
 	@Pre  The passed string must be the name of a file and in the directory
 	@Post  A list is created from the file that was passed as a string parameter */
-	Editor(string _textFileName, const string _keyWords[], int size);
+	Editor(string _textFileName, const string _keyWordsFilename);
+
+	void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
 
 	/** displays everything in lines
 	 @Pre  The list must not be empty.

@@ -96,14 +96,15 @@ Editor::Editor()
 {
 } // end Editor()
 
-Editor::Editor(string _textFileName, const string _keyWords[], int size)
+Editor::Editor(string _textFileName, const string _keyWordsFilename)
 {
 	ifstream inFile(_textFileName);
 	string temp;
 	textFile = _textFileName;
+	ifstream inKeyWords(_keyWordsFilename);
+	makeKeywordArray(keyWords, 60, inKeyWords);
+
 	int lineCounter = 1;
-	for (int i = 0; i < size; i++)
-		keyWords[i] = _keyWords[i];
 
 	//make sure file opened correctly
 	try
@@ -128,6 +129,18 @@ Editor::Editor(string _textFileName, const string _keyWords[], int size)
 		lineCounter++;
 	} // end while
 } // end Editor
+
+void Editor::makeKeywordArray(string keywordArr[], int size, ifstream& inData)
+{
+	int i = 0;
+	string newWord;
+	while (inData.good())
+	{
+		//getline(inData, keywordArr[i]);
+		inData >> keywordArr[i];
+		i++;
+	}
+}
 
 void Editor::moveToEndOfConsole()
 {

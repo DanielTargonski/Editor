@@ -30,15 +30,9 @@ void selectionSort(Type theArray[], int n);
 
 void outputToFile(const string arr[], int size, ostream& outData);
 
-void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
-
 int main(int argc, const char* argv[])
 {
-	string keyWords[60];
-	ifstream inKeywords("keywords.txt");
 	int numberOfCmdLineArgs = 0;
-
-	makeKeywordArray(keyWords, 60, inKeywords);
 
 	// argv[] reads in from the command line.
 	if (argc < 1)
@@ -65,7 +59,7 @@ int main(int argc, const char* argv[])
 	//}
 
 	//if user specifies 2 parameters then read in argv[2]
-	Editor miniVi(argv[1], keyWords, 60);
+	Editor miniVi(argv[1], argv[2]);
 
 	system("CLS"); // clears screen
 	miniVi.run();
@@ -93,18 +87,6 @@ int findIndexOfLargest(const TYPE theArray[], int size)
 
 	return indexSoFar; // Index of largest entry
 }  // end findIndexOfLargest
-
-void makeKeywordArray(string keywordArr[], int size, ifstream& inData)
-{
-	int i = 0;
-	string newWord;
-	while (inData.good())
-	{
-		//getline(inData, keywordArr[i]);
-		inData >> keywordArr[i];
-		i++;
-	}
-}
 
 template <typename Type>
 void selectionSort(Type theArray[], int n)
