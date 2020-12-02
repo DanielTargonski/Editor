@@ -1,6 +1,7 @@
 int main ()
 {}
 notkeyword  retur auto no
+while
 for  Asm auto
 pub lic  es
 reinterpret_cast   aha
