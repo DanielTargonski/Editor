@@ -48,7 +48,6 @@ int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 
 void Editor::displayLines()
 {
-	system("CLS");
 	int position;
 	string nextLine, nextWord, line{};
 

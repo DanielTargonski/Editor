@@ -15,7 +15,7 @@ using namespace std;
  @param theArray  The given array.
  @param size  The number of elements in theArray.
  @return  The index of the largest entry in the array. */
-template < typename Type>
+template <typename Type>
 int findIndexOfLargest(const Type theArray[], int size);
 
 /** Sorts  the items in an array into ascending order.
