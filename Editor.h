@@ -26,6 +26,7 @@ u: Undo last deletion.
 #include"CommandPlus.h"
 #include"LinkedStack.h"
 #include<sstream>
+#include"BinarySearchTree.h"
 
 using namespace std;
 
@@ -37,10 +38,10 @@ private:
 	LinkedStack<class CommandPlus> undoSt;
 	// User Position (uPos), Keeps track of where the cursor is.
 	Point uPos;
-	// Holds key words to be highlighted.
-	string keyWords[60];
-	int keywordArrSize = sizeof(keyWords) / sizeof(keyWords[0]);
+	//holds the passed .txt filename from command prompt
 	string textFile;
+	// Holds key words to be highlighted.
+	BinarySearchTree<string> keywordBST;
 
 	const char QUIT = 'q';
 	const int ESCAPE = 27;
@@ -60,7 +61,13 @@ public:
 	@Post  A list is created from the file that was passed as a string parameter */
 	Editor(string _textFileName, const string _keyWordsFilename);
 
-	void makeKeywordArray(string keywordArr[], int size, ifstream& inData);
+	/** fills the keywordBST member with keywords to be highlighted
+	@param  aBST, takes in the keywordBST by reference
+	@param  inData, takes in a ifstream object that has been opened to "keywords.txt"
+	@pre  inData has been opened to "keywords.txt"
+	@post  keywordBST is filled with what is in keywords.txt
+	*/
+	void fillBST(BinarySearchTree<string>& aBST, ifstream& inData);
 
 	/** displays everything in lines
 	 @Pre  The list must not be empty.

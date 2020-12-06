@@ -1,60 +1,14 @@
-Asm
-auto
-bool
-break
-case
-catch
-char
-class
-const_cast
-continue
-default
-delete
-do
-double
-dynamic_cast
-else
-enum
-extern
-false
-float
-for
-friend
-goto
-if
-inline
-int
-long
-mutable
-namespace
-new
-operator
-private
-protected
-public
-register
-reinterpret_cast
-return
-short
-signed
-sizeof
-static
-static_cast
-struct
-switch
-template
-this
-throw
-true
-try
-typedef
-typeid
-union
-unsigned
-unsigned
-using
-virtual
-void
-volatile
-wchar_t
-while
+new else typedef  class short public mutable	union break  
+double for 
+ virtual	  namespace		
+template	 delete operator bool typeid	auto	 char wchar_t	
+Asm		true  		protected case
+goto	using if	do inline unsigned		long
+default		false	 static_cast	 unsigned 
+	int this		continue	extern
+try static		volatile 		reinterpret_cast
+struct private	while 		register	void
+		signed return		friend
+throw catch	switch		const_cast	
+enum	dynamic_cast 		
+float 				sizeof

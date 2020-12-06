@@ -6,7 +6,6 @@
 
 #include<iostream>
 #include"Editor.h"
-#include<memory>
 
 using namespace std;
 

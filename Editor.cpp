@@ -65,7 +65,7 @@ void Editor::displayLines()
 					word += nextLine[i];
 					i++;
 				}
-				if (binarySearch(keyWords, 0, keywordArrSize, word) != -1)
+				if (keywordBST.contains(word) != 1)
 					colorText(1);
 				else
 					colorText(0);
@@ -102,7 +102,7 @@ Editor::Editor(string _textFileName, const string _keyWordsFilename)
 	string temp;
 	textFile = _textFileName;
 	ifstream inKeyWords(_keyWordsFilename);
-	makeKeywordArray(keyWords, 60, inKeyWords);
+	fillBST(keywordBST, inKeyWords);
 
 	int lineCounter = 1;
 
@@ -128,19 +128,11 @@ Editor::Editor(string _textFileName, const string _keyWordsFilename)
 		lines.insert(lineCounter, temp);
 		lineCounter++;
 	} // end while
-} // end Editor
 
-void Editor::makeKeywordArray(string keywordArr[], int size, ifstream& inData)
-{
-	int i = 0;
-	string newWord;
-	while (inData.good())
-	{
-		//getline(inData, keywordArr[i]);
-		inData >> keywordArr[i];
-		i++;
-	}
-}
+	inFile.close();
+	inKeyWords.close();
+
+} // end Editor
 
 void Editor::moveToEndOfConsole()
 {
@@ -419,6 +411,17 @@ void Editor::createSpace()
 {
 	for (int i = 0; i < lines.getLength() / 5 + 1; i++)
 		cout << "\n\n\n\n\n";
+}
+
+void Editor::fillBST(BinarySearchTree<string>& aBST, ifstream& inData)
+{
+	string tempWord;
+	while (inData.good())
+	{
+		inData >> tempWord;
+		aBST.add(tempWord);
+	}
+
 }
 
 void Editor::run()
