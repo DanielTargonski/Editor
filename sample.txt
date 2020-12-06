@@ -1,14 +1,12 @@
-Home Burial
-BY ROBERT FROST
-
-He saw her from the bottom of the stairs
-Before she saw him. She was starting down,
-Looking back over her shoulder at some fear.
-She took a doubtful step and then undid it
-To raise herself and look again. He spoke
-Advancing toward her: ‘What is it you see
-From up there always—for I want to know.’
-
+template<class ItemType>
+bool BinarySearchTree<ItemType>::add(const ItemType& newData)
+{
+   auto newNodePtr = std::make_shared<BinaryNode<ItemType>>(newData);
+   rootPtr = placeNode(rootPtr, newNodePtr);
+   
+   return true;
+}  // end add
+break base catch
 some keywords:
 Asm
 auto
