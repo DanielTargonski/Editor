@@ -1,17 +1,19 @@
-int main ()
-{}
-notkeyword  retur auto no
-while
-for  Asm auto
-pub lic  es
-reinterpret_cast   aha
-return       awer
-notakey   spaces   words
-int
-main
-int main
-signed
-static
-static_cast
-static nonkey
-}
+template<class ItemType>
+bool BinarySearchTree<ItemType>::add(const ItemType& newData)
+{
+   auto newNodePtr = std::make_shared<BinaryNode<ItemType>>(newData);
+   rootPtr = placeNode(rootPtr, newNodePtr);
+   
+   return true;
+}  // end add
+break base catch
+some keywords:
+Asm
+auto
+bool
+break
+case
+catch
+char
+class
+const_cast
