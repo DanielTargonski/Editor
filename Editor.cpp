@@ -3,6 +3,10 @@
 */
 
 #include"Editor.h"
+#define ARROWUP  72
+#define ARROWDOWN  80
+#define ARROWLEFT  75
+#define ARROWRIGHT 77
 
 void placeCursorAt(Point coordinate) {
 	COORD coord;
@@ -439,10 +443,6 @@ void Editor::run()
 	int lengthOfLines{};
 	unsigned int deleteLineCounter{};
 	CommandPlus cmd;
-	const int upArrowKey = 72;
-	const int downArrowKey = 80;
-	const int rightArrowKey = 77;
-	const int leftArrowKey = 75;
 
 	// Keeps program running while users does not enter ':q'
 	// Allows user to enter certain commands to move cursor around txt file
@@ -453,22 +453,22 @@ void Editor::run()
 		switch (cmd.getCommand())
 		{
 		case 'j':
-		case downArrowKey: // down arrow key
+		case ARROWDOWN: // down arrow key
 			moveDown();
 			deleteLineCounter = 0;
 			break;
 		case 'k':
-		case upArrowKey: // up arrow key
+		case ARROWUP: // up arrow key
 			moveUp();
 			deleteLineCounter = 0;
 			break;
 		case 'l':
-		case rightArrowKey: // right arrow key
+		case ARROWRIGHT: // right arrow key
 			moveRight();
 			deleteLineCounter = 0;
 			break;
 		case 'h':
-		case leftArrowKey: // left arrow key
+		case ARROWLEFT: // left arrow key
 			moveLeft();
 			deleteLineCounter = 0;
 			break;
@@ -504,6 +504,7 @@ void Editor::run()
 			else if (cmd.getCommand() == 'w')
 				saveFile();
 
+			system("CLS");
 			displayLines();
 			deleteLineCounter = 0;
 			break;
