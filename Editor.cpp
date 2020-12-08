@@ -13,16 +13,6 @@ void placeCursorAt(Point coordinate) {
 		coord);
 } // end placeCursorAt
 
-//old displayLines()
-//void Editor::displayLines()
-//{
-//	int position;
-//	for (position = 1; position <= lines.getLength(); position++)
-//		cout << lines.getEntry(position) << "\n";
-//
-//	placeCursorAt(uPos);
-//} // end displayLines
-
 template<typename TYPE>
 int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 {
@@ -46,6 +36,25 @@ int Editor::binarySearch(TYPE anArray[], int first, int last, TYPE target)
 	return index;
 }  // end binarySearch
 
+template <typename Type>
+void Editor::selectionSort(Type theArray[], int n)
+{
+	// last = index of the last item in the subarray of items yet
+		 //        to be sorted;
+		// largest = index of the largest item found
+	for (int last = n - 1; last >= 1; last--)
+	{
+		// At this point, theArray[last+1..n–1] is sorted, and its
+		   // entries are greater than those in theArray[0..last].
+	   // Select the largest entry in theArray[0..last]
+		int largest = findIndexOfLargest(theArray, last + 1);
+
+		// Swap the largest entry, theArray[largest], with
+		 // theArray[last]
+		swap(theArray[largest], theArray[last]);
+	}  // end for
+}
+
 void Editor::displayLines()
 {
 	int position;
@@ -54,7 +63,6 @@ void Editor::displayLines()
 	for (position = 1; position <= lines.getLength(); position++)
 	{
 		nextLine = lines.getEntry(position);
-
 		int i = 0;
 		while (i < nextLine.length()) {
 			string word;
@@ -286,8 +294,8 @@ void Editor::undo()
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
-			lines.replace(tempCmd.getYLocation() + 1,
-				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
+		lines.replace(tempCmd.getYLocation() + 1,
+		lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
 			// This increments the x position as you are undoing as long as
 			// the length of the line is longer than the x position.
 			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
@@ -429,7 +437,7 @@ void Editor::run()
 
 	bool run{ true };
 	int lengthOfLines{};
-	unsigned int count{};
+	unsigned int deleteLineCounter{};
 	CommandPlus cmd;
 	const int upArrowKey = 72;
 	const int downArrowKey = 80;
@@ -447,42 +455,42 @@ void Editor::run()
 		case 'j':
 		case downArrowKey: // down arrow key
 			moveDown();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'k':
 		case upArrowKey: // up arrow key
 			moveUp();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'l':
 		case rightArrowKey: // right arrow key
 			moveRight();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'h':
 		case leftArrowKey: // left arrow key
 			moveLeft();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'x':
 			deleteChar();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'd':
-			count++;
-			if (count == 2) {
+			deleteLineCounter++;
+			if (deleteLineCounter == 2) {
 				deleteLine();
-				count = 0;
+				deleteLineCounter = 0;
 			}
 			break;
 		case 'u':
 			undo();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case 'i':
 			insert_mode = true;
 			InsertMode();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		case ':':
 			placeCursorAt(semi);
@@ -497,10 +505,10 @@ void Editor::run()
 				saveFile();
 
 			displayLines();
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		default:
-			count = 0;
+			deleteLineCounter = 0;
 			break;
 		} // end switch
 	} // end while

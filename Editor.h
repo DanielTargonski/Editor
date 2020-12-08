@@ -65,18 +65,22 @@ public:
 	@param  aBST, takes in the keywordBST by reference
 	@param  inData, takes in a ifstream object that has been opened to "keywords.txt"
 	@pre  inData has been opened to "keywords.txt"
-	@post  keywordBST is filled with what is in keywords.txt
-	*/
+	@post  keywordBST is filled with what is in keywords.txt */
 	void fillBST(BinarySearchTree<string>& aBST, ifstream& inData);
 
-	/** displays everything in lines
-	 @Pre  The list must not be empty.
-	 @Post  The list is output to the console. */
-	 //void displayLines();
+	/** Sorts  the items in an array into ascending order.
+	@pre  None.
+	@post  The array is sorted into ascending order; the size of the array
+	is unchanged.
+	@param theArray  The array to sort.
+	@param n  The size of theArray. */
+	template <typename Type>
+	void selectionSort(Type theArray[], int n);
 
 	/** displays everything in lines and colors keywords.
-	 @Pre  The list must not be empty.
-	 @Post  The list is output to the console. */
+	 @Pre  none.
+	 @Post  The list is output to the console and each keyword
+	 is colored. */
 	void displayLines();
 
 	/** Moves cursor down. Command 'j'
@@ -96,28 +100,24 @@ public:
 
 	/** Moves the cursor to the right. Command: 'l'
 	@pre  There must be text to the right of the cursor.
-	@post  The cursor moves one position to the right.
-	*/
+	@post  The cursor moves one position to the right. */
 	void moveRight();
 
 	/** Delete character that cursor is on. Command: 'x'
 	@pre  User cursor must be on a char or empty space
 	@post  The char in the string is deleted and pushed
-	onto the LinkedStack.
-	*/
+	onto the LinkedStack. */
 	void deleteChar();
 
 	/** Deletes line that cursor is on. Command: 'dd'
 	@pre  Cursor is on a line.
-	@post  Line is deleted and pushed into the undo stack.
-	*/
+	@post  Line is deleted and pushed into the undo stack. */
 	void deleteLine();
 
 	/** Runs the editor.
 	@pre  None.
 	@post  The editor begins running and allows you
-	to move a cursor around the text.
-	*/
+	to move a cursor around the text. */
 	void run();
 
 	/** Undo previous deletion. Command 'u'
@@ -130,6 +130,9 @@ public:
 	@param  value int, changes color depending on int passed.*/
 	void colorText(int value);
 
+	/** 
+	
+	*/
 	void InsertMode();
 
 	/** Moves cursor to end of console with command ":,"
@@ -170,6 +173,4 @@ public:
 	@pre  Must be an open file.
 	@post  File is overwritten with current state. */
 	void saveFile();
-
-
 };
