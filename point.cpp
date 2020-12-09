@@ -49,3 +49,10 @@ bool Point::operator==(const Point& p2) const
 	return ((mX == p2.mX) &&
 		(mY == p2.mY));
 } // end operator==
+
+ostream& operator<<(ostream& os, Point& point)
+{
+	os << '(' << point.getX() <<
+		',' << point.getY() << ')';
+	return os;
+}

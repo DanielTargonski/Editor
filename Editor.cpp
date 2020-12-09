@@ -113,6 +113,13 @@ Editor::Editor(string _textFileName, const string _keyWordsFilename)
 	string temp;
 	textFile = _textFileName;
 	ifstream inKeyWords(_keyWordsFilename);
+
+	if (inKeyWords.fail())
+	{
+		cerr << "Keyword file did not open correctly.\n";
+		exit(-1);
+	}
+
 	fillBST(keywordBST, inKeyWords);
 
 	int lineCounter = 1;
@@ -325,11 +332,18 @@ void Editor::InsertMode()
 	CommandPlus tmpCommand;
 	tmpCommand.setValue(lines.getEntry(uPos.getY() + 1));
 	undoSt.push(tmpCommand);
-
 	char userInput{};
 
 	while (true)
 	{
+
+		// This writes insert mode at the bottom
+		Point currentPos(uPos.getX(), uPos.getY());
+		Point BOTTOM(1, lines.getLength() + 3);
+		placeCursorAt(BOTTOM);
+		cout << "INSERT MODE";
+		placeCursorAt(currentPos);
+
 		// Get user input
 		userInput = _getch();
 
@@ -397,6 +411,9 @@ void Editor::InsertMode()
 		// Fix and move to new position
 		uPos.setX(uPos.getX() + 1);
 	}
+	//This will delete the INSERT MODE from the bottom.
+	system("CLS"); // clears screen
+	displayLines();
 }
 
 void Editor::colorText(int value)
@@ -435,6 +452,25 @@ void Editor::fillBST(BinarySearchTree<string>& aBST, ifstream& inData)
 
 }
 
+void Editor::tripleAction(const char x)
+{
+	if (x == 'd' || x == 'k' || x == 'j' || x=='x')
+	{
+		if (x == 'd')
+			for (int i = 0; i < 3; i++)
+				deleteLine();
+		else if (x == 'x')
+			for (int i = 0; i < 3; i++)
+				deleteChar();
+		else if (x == 'j')
+			for (int i = 0; i < 3; i++)
+				moveDown();
+		else if (x == 'k')
+			for (int i = 0; i < 3; i++)
+				moveUp();
+	}
+}
+
 void Editor::run()
 {
 	displayLines();
@@ -448,10 +484,22 @@ void Editor::run()
 	// Allows user to enter certain commands to move cursor around txt file
 	while (run)
 	{
-		Point semi(1, lines.getLength() + 3);
+		Point BOTTOM(1, lines.getLength() + 3);
+		Point currentPos(uPos.getX(), uPos.getY());
+
 		cmd.setCommand();
 		switch (cmd.getCommand())
 		{
+		case '3':
+			placeCursorAt(BOTTOM);
+			cout << "TRIPLE ENGAGED";
+			placeCursorAt(currentPos);
+			cmd.setCommand();
+			tripleAction(cmd.getCommand());
+			system("CLS");
+			displayLines();
+			deleteLineCounter = 0;
+			break;
 		case 'j':
 		case ARROWDOWN: // down arrow key
 			moveDown();
@@ -493,7 +541,7 @@ void Editor::run()
 			deleteLineCounter = 0;
 			break;
 		case ':':
-			placeCursorAt(semi);
+			placeCursorAt(BOTTOM);
 			cout << ":";
 			cmd.setCommand();
 			cout << cmd.getCommand();

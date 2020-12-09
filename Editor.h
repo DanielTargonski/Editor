@@ -130,10 +130,17 @@ public:
 	@param  value int, changes color depending on int passed.*/
 	void colorText(int value);
 
-	/** 
-	
+	/** inserts characters into the opened text file.
+	@pre  none
+	@post  none
 	*/
 	void InsertMode();
+
+	/** triple delete line,char,moveup or movedown
+	@pre  none
+	@post  depends on which char is hit.
+	*/
+	void tripleAction(const char x);
 
 	/** Moves cursor to end of console with command ":,"
 	@pre  none.
