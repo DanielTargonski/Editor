@@ -37,7 +37,7 @@ public:
 	// Postcondition: If both pairs are equal, returns true, otherwise, returns false.
 	// The points are unchanged.
 	bool operator==(const Point&) const;
-
+	friend ostream& operator<<(ostream& os, Point& point);
 
 private:
 	int mX, mY;

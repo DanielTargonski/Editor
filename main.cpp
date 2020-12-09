@@ -1,7 +1,8 @@
 ﻿/**
 @purpose This is a simplified vi editor.
 @file main.cpp
-@input A text file.
+@input A text file and keywords file that the editor will color blue
+when outputted to console.
 @output a display of the text file that was input*/
 
 #include<iostream>
