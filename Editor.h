@@ -140,7 +140,7 @@ public:
 	@pre  none
 	@post  depends on which char is hit.
 	*/
-	void tripleAction(const char x);
+	void tripleCall(const char x);
 
 	/** Moves cursor to end of console with command ":,"
 	@pre  none.

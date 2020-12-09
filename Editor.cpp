@@ -149,7 +149,6 @@ Editor::Editor(string _textFileName, const string _keyWordsFilename)
 
 	inFile.close();
 	inKeyWords.close();
-
 } // end Editor
 
 void Editor::moveToEndOfConsole()
@@ -305,8 +304,8 @@ void Editor::undo()
 		// to be replaced with the character in the exact place it originally was.
 		else
 		{
-		lines.replace(tempCmd.getYLocation() + 1,
-		lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
+			lines.replace(tempCmd.getYLocation() + 1,
+				lines.getEntry(tempCmd.getYLocation() + 1).insert(tempCmd.getXLocation(), tempCmd.getValue()));
 			// This increments the x position as you are undoing as long as
 			// the length of the line is longer than the x position.
 			// We only want to increment 'x' if we're undoing chars, which is why it's inside this
@@ -336,7 +335,6 @@ void Editor::InsertMode()
 
 	while (true)
 	{
-
 		// This writes insert mode at the bottom
 		Point currentPos(uPos.getX(), uPos.getY());
 		Point BOTTOM(1, lines.getLength() + 3);
@@ -449,12 +447,11 @@ void Editor::fillBST(BinarySearchTree<string>& aBST, ifstream& inData)
 		inData >> tempWord;
 		aBST.add(tempWord);
 	}
-
 }
 
-void Editor::tripleAction(const char x)
+void Editor::tripleCall(const char x)
 {
-	if (x == 'd' || x == 'k' || x == 'j' || x=='x')
+	if (x == 'd' || x == 'k' || x == 'j' || x == 'x')
 	{
 		if (x == 'd')
 			for (int i = 0; i < 3; i++)
@@ -495,7 +492,7 @@ void Editor::run()
 			cout << "TRIPLE ENGAGED";
 			placeCursorAt(currentPos);
 			cmd.setCommand();
-			tripleAction(cmd.getCommand());
+			tripleCall(cmd.getCommand());
 			system("CLS");
 			displayLines();
 			deleteLineCounter = 0;
