@@ -1,6 +1,6 @@
 template<class ItemType>
 bool BinarySearchTree<ItemType>::add(const ItemType& newData)
-{
+ test for auto Asm test {
    auto newNodePtr = std::make_shared<BinaryNode<ItemType>>(newData);
    rootPtr = placeNode(rootPtr, newNodePtr);
    
@@ -17,4 +17,5 @@ catch
 char
 class
 const_cast
+
 

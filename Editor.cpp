@@ -76,7 +76,7 @@ void Editor::displayLines()
 					word += nextLine[i];
 					i++;
 				}
-				if (keywordBST.contains(word) != 1)
+				if (keywordBST.contains(word))
 					colorText(1);
 				else
 					colorText(0);
